@@ -1,0 +1,481 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<link type="text/css" rel="stylesheet" href="styles.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+</head>
+<body>
+<div class="fluig-style-guide">
+<form name="form" role="form">
+	<input type="hidden" name="currentTask" id="currentTask">
+	<input type="hidden" name="requiredFields" id="requiredFields">
+	<input type="hidden" name="missingField" id="missingField">
+	<input type="hidden" name="products" id="products">
+	<input type="hidden" name="availableProducts" id="availableProducts">
+	<input type="hidden" name="unavailableProducts" id="unavailableProducts">
+	<input type="hidden" name="productsName"id="productsName">
+	<!-- <input type="hidden" name="numMov" id="numMov">	 -->
+	<input type="hidden" name="indexesAlmox" id="indexesAlmox">
+	<input type="hidden" name="aprovador" id="aprovador">
+	<input type="hidden" name="identificador" id="identificador">
+	<!-- <input type="hidden" name="numMovCompra" id="numMovCompra"> -->
+	<div class='panel panel-primary' id='codigos'>
+		<div class='panel-heading'>Identificadores</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='numMov'>Id da RM</label>
+						<input class='form-control' type='text' name='numMov' id='numMov'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='numMovCompra'>Id da SC</label>
+						<input class='form-control' type='text' name='numMovCompra' id='numMovCompra'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='numMovCompraNovo'>Nº sC</label>
+						<input class='form-control' type='text' name='numMovCompraNovo' id='numMovCompraNovo'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='codCotacao'>COD Cotacao</label>
+						<input class='form-control' type='text' name='codCotacao' id='codCotacao'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='idPedido'>Nº Pedido</label>
+						<input class='form-control' type='text' name='idPedido' id='idPedido'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='status'>Status</label>
+						<input class='form-control' type='text' name='status' id='status'>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='entregaProdutos'>
+
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Produtos a ser entregues
+			</h3>
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-3 col-md-3 col-sm-3 col-lg-3'>
+					<label class='control-label' for='a'>Prateleira</label>						
+				</div>
+				<div class='col-xs-5 col-md-5 col-sm-5 col-lg-5'>					
+					<label class='control-label' for='a'>Nome</label>						
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<label class='control-label' for='a'>Qtd</label>						
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<label class='control-label' for='a'>Saldo</label>						
+				</div>
+			</div>
+			<table class="table table-striped" tablename="TBALMOX" id="TBALMOX" noaddbutton="true" nodeletebutton="true" >
+				<thead>
+					<tr>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div class="row">
+								<input type="hidden" name="idx" id="idx">
+								<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+									<div class="form-group">									
+										<input class="form-control" type="text" readonly name="prat" id="prat">
+									</div>
+								</div>
+								<div class="col-xs-5 col-md-5 col-sm-5 col-lg-5">
+									<div class="form-group">									
+										<input class="form-control" type="text" readonly name="nome" id="nome">
+									</div>
+								</div>
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+									<div class="form-group">									
+										<input class="form-control" step="0.0001" type="text" onkeypress="formatarMoeda(this)" name="qtd" id="qtd">
+									</div>
+								</div>
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+									<div class="form-group">									
+										<input class="form-control" type="text" readonly name="sld" id="sld">
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+	</div>	
+	<div class='panel panel-primary' id='requestData'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+			Dados da Requisição
+			</h3>
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>
+					<div class='form-group'>
+						<label class='control-label' for='requester'>Solicitante<span style="color:red">*</span></label>
+							<input class='form-control' type='zoom' id='requester' name='requester' data-zoom="{
+								'displayKey':'DESCRICAO',
+								'datasetId':'ds_RequisicaoMaterial_ConsultaRequisitante',
+								'fields':[
+											{
+											'field':'DESCRICAO',
+											'label':'DESCRICAO'
+											}
+										]
+								}" />
+					</div>
+				</div>
+				<div class='col-xs-12 col-md-3 col-sm-3 col-lg-3'>
+					<div class='form-group'>
+						<label class='control-label' for='filial'>Filial<span style="color:red">*</span></label>
+							<div class='form-group'>
+								<label class='control-label' for='filial'></label>
+								<input class='form-control' type='text' name='filial' id='filial' value="TG - MATRIZ" readonly/>
+							</div>
+					</div>
+				</div>
+				<div class='col-xs-12 col-md-3 col-sm-3 col-lg-3'>
+					<div class='form-group'>
+						<label class='control-label' for='dataEntrega'>Data de Entrega<span style="color:red">*</span></label>
+						<input class='form-control' type='text' name='dataEntrega' id='dataEntrega' mask='00/00/0000'>
+					</div>
+				</div>
+				
+			</div>
+			<div class='row'>
+				<div class='col-xs-6 col-md-6 col-sm-6 col-lg-6'>
+					<div class='form-group'>
+						<label class='control-label' for='centroCusto'>Centro de Custo<span style="color:red">*</span></label>
+							<input class='form-control' type='zoom' id='centroCusto' name='centroCusto' data-zoom="{
+								'displayKey':'DESCRICAO',
+								'datasetId':'ds_RequisicaoMaterial_ConsultaCentroCusto',
+								'fields':[
+											{
+											'field':'DESCRICAO',
+											'label':'DESCRICAO'
+											}
+										]
+								}" />
+					</div>
+				</div>
+				<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>
+					<div class='form-group'>
+						<label class='control-label' for='departamento'>Departamento<span style="color:red">*</span></label>
+							<input class='form-control' type='zoom' id='departamento' name='departamento' data-zoom="{
+								'displayKey':'DESCRICAO',
+								'datasetId':'ds_RequisicaoMaterial_ConsultaDepartamento',
+								'fields':[
+											{
+											'field':'DESCRICAO',
+											'label':'DESCRICAO'
+											}
+										]
+								}" />
+					</div>
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>					
+						<!-- <input type="hidden" name="saldo" id="saldo"> -->
+						<div class='form-group'>
+							<label class='control-label' for='localProduto'>Local de Estoque<span style="color:red">*</span></label>
+							<input class="form-control" type="zoom" id="localProduto" name="localProduto" data-zoom="{
+								'displayKey':'DESCRICAO',
+								'datasetId':'ds_RequisicaoMateriais_ConsultaLocal',
+								'fields':[
+											{
+											'field':'DESCRICAO',
+											'label':'DESCRICAO'
+											}
+										]
+								}" />	
+						</div>				
+				</div>
+			</div>
+			<button type="button" class="btn btn-success"onclick="scripts_tabelas.insere('TBPRODUTOS')">Adicionar Produto</button>
+			<table class="table table-striped" tablename="TBPRODUTOS" id="TBPRODUTOS" customFnDelete="scripts_tabelas.remove(this)" noaddbutton="true" nodeletebutton="true" >
+				<thead>
+					<tr>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div class='row'>
+								<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>
+									<!-- <input type="hidden" name="saldo" id="saldo"> -->
+									<div class='form-group'>
+										<label class='control-label' for='product'>Produto<span style="color:red">*</span></label>
+										<input class="form-control" type="zoom" id="product" name="product" data-zoom="{
+											'displayKey':'DESCRICAO',
+											'datasetId':'ds_RequisicaoMaterial_ConsultaProdutoSync',
+											'fields':[
+														{
+														'field':'DESCRICAO',
+														'label':'DESCRICAO'
+														},
+														{
+														'field':'IDPRD',
+														'label':'ID',
+														'visible':'false'	
+														},
+														{
+														'field':'UNIDADE',
+														'label':'UNIDADE'
+														},
+														{
+														'field':'SALDO',
+														'label':'SALDO'
+														},
+														{
+														'field':'PRATELEIRA',
+														'label':'PRATELEIRA',
+														'visible':'false'
+														}
+													]
+											}" />	
+									</div>
+									
+								</div>
+								<div class='col-xs-12 col-md-2 col-sm-2 col-lg-2'>
+									<div class='form-group'>
+										<label class="control-label"  for="quantity">Quantidade<span style="color:red">*</span></label>
+										<input class="form-control" readonly  onkeypress="formatarMoeda(this)" onchange="handleChangeQuantity(this)" type="text" mask="#00.000,00" name="quantity" id="quantity">
+									</div>
+								</div>
+								<div class="col-xs-12 col-md-1 col-sm-1 col-lg-1">
+									<div class="form-group">
+										<label class="control-label" for="unidade">Unidade</label>
+										<input class="form-control" readonly type="text" name="unidade" id="unidade">
+									</div>
+								</div>
+								<div class="col-xs-12 col-md-1 col-sm-1 col-lg-1">
+									<div class="form-group">
+										<label class="control-label" for="idprd">ID</label>
+										<input class="form-control" readonly type="number" name="idprd" id="idprd">
+									</div>									
+								</div>
+								<div class="col-xs-12 col-md-2 col-sm-2 col-lg-2">
+									<div class="form-group">
+										<label class="control-label" for="prateleira">Prateleira</label>
+										<input class="form-control" readonly type="text" name="prateleira" id="prateleira">
+									</div>
+									
+								</div>
+							</div>
+							<div class='row'>
+								<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>
+									<div class='form-group'>
+										<label class='control-label' for='centroCustoProduto'>Centro de Custo<span style="color:red">*</span></label>
+											<input class="form-control" type="zoom" id="centroCustoProduto" name="centroCustoProduto" data-zoom="{
+												'displayKey':'DESCRICAO',
+												'datasetId':'ds_RequisicaoMaterial_ConsultaCentroCusto',
+												'fields':[
+															{
+															'field':'DESCRICAO',
+															'label':'DESCRICAO'
+															}
+														]
+												}" />
+									</div>									
+								</div>
+								<div class='col-xs-12 col-md-3 col-sm-3 col-lg-3'>
+									<div class="form-group">
+										<label class="control-label" for="historicoCurtoProduto">Historico Curto<span style="color:red">*</span></label>
+										<!-- <textarea class="form-control" type="text" name="historicoCurtoProduto" id="historicoCurtoProduto" rows="1"></textarea> -->
+										<input class="form-control" type="text" name="historicoCurtoProduto" id="historicoCurtoProduto">
+									</div>
+								</div>
+								<div class='col-xs-12 col-md-3 col-sm-3 col-lg-3'>
+									<div class="form-group">
+										<label class="control-label" for="frota">Frota</label>
+										<input class="form-control" type="number" name="frota" id="frota">
+									</div>
+								</div>
+							</div>
+							<div class='row'>
+								<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+									<div class='form-group' style="display:flex;justify-content:flex-end">
+										<button type="button"  class="btn btn-danger" onclick="scripts_tabelas.remove(this)">Remover Item</button>								
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<!-- <div class='form-group'>
+						<label class='control-label' for='historicoCurto'>Histórico Curto<span style="color:red">*</span></label>
+						<textarea class='form-control' type='text' name='historicoCurto' id='historicoCurto' rows='10'></textarea>
+					</div> -->
+					<div class="form-group">
+						<label class="control-label" for="historicoCurto">Historico Curto</label>
+						<input class="form-control" type="text" name="historicoCurto" id="historicoCurto">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='requestApprover'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+			Aprovador da Solicitação
+			</h3>
+		</div>
+		
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<div class='form-group'>
+						<label class='control-label' for='approverDecision'>Decisão do Aprovador</label>
+							<select class='form-control' onchange="enableRectifyField('approverComment','approverDecision')" type='zoom' id='approverDecision' name='approverDecision'>
+								<option value='null'>-</option>
+								<option value="1">Aprovar</option>
+								<option value="0">Recusar</option>
+							</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='approverComments'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Correcao
+			</h3>
+			
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<!-- <div class='form-group'>
+						<label class='control-label' for='approverComment'>Observações</label>
+						<textarea class='form-control' type='text' name='approverComment' id='approverComment' rows='10'></textarea>
+					</div> -->
+					<div class="form-group">
+						<label class="control-label" for="approverComment">Observações</label>
+						<input class="form-control" type="text" name="approverComment" id="approverComment">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class='panel panel-primary' id='aprovacaoGerencia'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Aprovação Gerencia
+			</h3>
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<div class='form-group'>
+						<label class='control-label' for='gerenciaDecision'>Decisão da Gerência</label>
+							<select class='form-control' onchange="enableRectifyField('gerenciaComment','gerenciaDecision')" type='zoom' id='gerenciaDecision' name='gerenciaDecision'>
+								<option value="">-</option>
+								<option value="1">Aprovar</option>
+								<option value="0">Recusar</option>
+							</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='gerenciaComments'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Correção
+			</h3>
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<div class='form-group'>
+						<label class='control-label' for='gerenciaComment'>Observações da Gerência</label>
+						<textarea class='form-control' type='text' name='gerenciaComment' id='gerenciaComment' rows='10'></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='aprovacaoDiretoria'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Aprovação da Diretoria
+			</h3>
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<div class='form-group'>
+						<label class='control-label' for='diretoriaDecision'>Decisão da Diretoria</label>
+							<select class='form-control' onchange="enableRectifyField('diretoriaComment','diretoriaDecision')" type='zoom' id='diretoriaDecision' name='diretoriaDecision'>
+								<option value="">-</option>
+								<option value="1">Aprovar</option>
+								<option value="0">Recusar</option>
+							</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='diretoriaComments'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Correção
+			</h3>
+		</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-12 col-md-12 col-sm-12 col-lg-12'>
+					<div class='form-group'>
+						<label class='control-label' for='diretoriaComment'>Observações da Diretoria</label>
+						<textarea class='form-control' type='text' name='diretoriaComment' id='diretoriaComment' rows='10'></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->	
+	<!-- <div class='panel panel-primary' id='compraProdutos'>
+		<div class='panel-heading'>
+			<h3 style='text-align:center;font-weight:bold'>
+				Produtos a ser comprados
+			</h3>
+		</div>
+		<div class='panel-body'>
+			
+		</div>
+	</div> -->
+	
+</form>
+</div>
+<script src="libs.js"></script>
+<script src="custom.js"></script>
+</body>
+</html>

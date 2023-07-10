@@ -1,0 +1,2577 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+		<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+		
+		<script src="/webdesk/vcXMLRPC.js"></script>
+		<script type="text/javascript" src="complementos.js" charset="utf-8"></script>
+		<script type="text/javascript" src="xp.validator.js" charset="utf-8"></script>	
+		<script type="text/javascript" src="xp.validatorExt.js" charset="utf-8"></script>
+		<link rel="stylesheet" href="xp.validator.css"/>
+		<link type="text/css" rel="stylesheet" href="style.css"/>
+		<script type="text/javascript" src="anexos.js" charset="utf-8"></script>
+		<script type="text/javascript" src="formFechamentoFolhaPgto.js" charset="utf-8"></script>
+		
+		<style type="text/css">
+		  	select[readonly] {
+		  	  background: #EEEEEE;
+		  	  pointer-events: none;
+		  	  touch-action: none;
+		  	}
+		</style>
+	</head>
+	
+	<body class="embracon-style-guide">
+		<div class="fluig-style-guide" id="process-content">
+			<div class="page-header">
+				<h2><span class="fluigicon fluigicon-sticky-note fluigicon-md"></span>&nbsp;Fechamento de Folha de Pagamento</h2>
+			</div>
+			<form class="fs-no-margin-bottom" name="form" role="form">
+				<!-- [Inicio] campos de controle -->
+				<input type="hidden" id="numeroFluxo" name="numeroFluxo" value="" />
+				<input type="hidden" id="dataFinalizacao" name="dataFinalizacao" value="" />
+				<input type="hidden" id="situacao" name="situacao" value="" />
+				<input type="hidden" id="campoDescritor" name="campoDescritor" value="" />
+				<input type="hidden" id="solicitanteMatricula" name="solicitanteMatricula" value="" />
+				<input type="hidden" id="currentNome" name="currentNome" value="" />
+				<input type="hidden" id="currentLogin" name="currentLogin" value="" />
+				<!-- [Fim] campos de controle -->
+				
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_DadosSolicitante">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="fluigicon fluigicon-user fluigicon-sm"></span>&nbsp;Dados do Solicitante
+								</a>
+							</h2>
+						</div>
+						<div id="collapseDadosSolicitante">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-2">
+							        	<div class="form-group">
+								        	<label id="lblDataCriacao" class="control-label" for="dataCriacao">Data Criação</label>
+								        	<div class="input-group">
+												<input type="text" class="form-control" id="dataCriacao" name="dataCriacao" readonly />
+												<span class="input-group-addon">
+										            <span class="fluigicon fluigicon-calendar"></span>
+										        </span>
+										    </div>
+										</div>
+							        </div> <!-- col-md -->
+							        <div class="col-md-4">
+							        	<div class="form-group">
+								        	<label id="lblSolicitante" class="control-label" for="solicitanteNome">Solicitante</label>
+								        	<div class="input-group">
+											    <input type="text" class="form-control" id="solicitanteNome" name="solicitanteNome" readonly />
+											    <span class="input-group-addon">
+										            <span class="fluigicon fluigicon-user"></span>
+										        </span>
+										    </div>
+										</div>
+							        </div> <!-- col-md -->
+							        <div class="col-md-6">
+							        	<div class="form-group">
+								        	<label class="control-label" for="solicitanteEmail">Email</label>
+										    <div class="input-group">
+											    <input type="text" class="form-control" id="solicitanteEmail" name="solicitanteEmail" readonly />
+											    <span class="input-group-addon">@</span>
+											</div>
+										</div>
+							        </div> <!-- col-md -->
+								</div> <!-- row -->
+								<div class="row">
+									<div class="col-md-3">
+							        	<div class="form-group">
+								        	<label class="control-label" for="solicitanteTelefone">Telefone</label>
+										    <div class="input-group">
+											    <input type="text" class="form-control" id="solicitanteTelefone" name="solicitanteTelefone" readonly />
+											    <span class="input-group-addon">
+										            <span class="fluigicon fluigicon-phone"></span>
+										        </span>
+											</div>
+										</div>
+							        </div> <!-- col-md -->
+							        <div class="col-md-3">
+							        	<div class="form-group">
+								        	<label class="control-label" for="solicitanteDepartamento">Departamento</label>
+										    <div class="input-group">
+											    <input type="text" class="form-control" id="solicitanteDepartamento" name="solicitanteDepartamento" readonly />
+											    <span class="input-group-addon">
+										            <span class="fluigicon fluigicon-company"></span>
+										        </span>
+											</div>
+										</div>
+							        </div> <!-- col-md -->
+							        <div class="col-md-6">
+							        	<div class="form-group">
+								        	<label class="control-label required" atividades="0,4" for="zoomColigada">Coligada</label>
+								        	<input type="hidden" id="codColigada" name="codColigada" />
+											<input type="zoom" class="form-control" id="zoomColigada" name="zoomColigada"
+										       data-zoom="{
+													    'displayKey': 'NOME',
+													    'datasetId': 'dsColigada',
+													    'filterValues': '',
+													    'fields': [
+													       {
+														       'field': 'NOME',
+														       'label': 'Coligada',	
+														       'standard': 'true',					       
+														       'search': 'true'
+													        }
+													     ]
+										       }" value="" />
+										</div>
+							        </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+								
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_DadosSolicitacao">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="fluigicon fluigicon-file icon-sm"></span>&nbsp;Dados da Solicitação
+								</a>
+							</h2>
+						</div>
+						<div id="collapseDadosSolicitacao">
+							<div class="panel-body">
+								<div class="row customBtnSend">
+									<div class="col-md-12 fs-md-margin-bottom">
+										<div class="fs-float-right">
+											<button type="button" class="btn btn-success fs-sm-margin-right" onclick="top.$('[data-save]').first().click();">Salvar</button>
+										</div>
+									</div>
+								</div>
+								<ul class="nav nav-tabs custom-nav-tabs" id="tabsDadosSolicitacao">
+									<li class="text-center active" data-atividade="5,146">
+										<a href="#tabResgConfLancamentos" role="tab" data-toggle="tab">
+											Registrar Lanç
+										</a>
+									</li>
+									<li class="text-center" data-atividade="43">
+										<a href="#tabGerarArqContabeis" role="tab" data-toggle="tab">
+											Arq Contábeis 
+										</a>
+									</li>
+									<li class="text-center" data-atividade="48">
+										<a href="#tabGerarResumosFolha" role="tab" data-toggle="tab">
+											Resumos de Folha
+										</a>
+									</li>
+									<li class="text-center" data-atividade="53">
+										<a href="#tabEsocial" role="tab" data-toggle="tab">
+											E-Social
+										</a>
+									</li>
+									<li class="text-center" data-atividade="58">
+										<a href="#tabContracheque" role="tab" data-toggle="tab">
+											Contracheques
+										</a>
+									</li>
+									<li class="text-center" data-atividade="63">
+										<a href="#tabFolhaPgto" role="tab" data-toggle="tab">
+											Folha de Pgto
+										</a>
+									</li>
+									<li class="text-center" data-atividade="184">
+										<a href="#tabArqBancarios" role="tab" data-toggle="tab">
+											Arq Bancários
+										</a>
+									</li>
+									<li class="text-center" data-atividade="72,100,102,210,211">
+										<a href="#tabFgtsAdmMar" role="tab" data-toggle="tab">
+											FGTS
+										</a>
+									</li>
+									<li class="text-center" data-atividade="83,112,111,217,218,88,122,124">
+										<a href="#tabIrrfInss" role="tab" data-toggle="tab">
+											INSS/IRFF
+										</a>
+									</li>
+									<li class="text-center" data-atividade="143">
+										<a href="#tabRepassesBenef" role="tab" data-toggle="tab">
+											Repasses da Folha
+										</a>
+									</li>
+									<li class="text-center" data-atividade="145">
+										<a href="#tabCompFolha" role="tab" data-toggle="tab">
+											Comp de Folha
+										</a>
+									</li>
+								</ul>
+										
+								<div class="tab-content custom-tab-content">
+								
+									<!-- TAB Registrar e conferir lançamentos -->
+									<div class="tab-pane active fade in" id="tabResgConfLancamentos">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-2">
+										        	<div class="form-group">
+											        	<label class="control-label-required required" atividades="0,4" for="mesCompetencia">Mês Competência</label>
+											        	<div class="input-group">
+															<input type="text" class="form-control" id="mesCompetencia" name="mesCompetencia" mask="00/0000" placeholder="__/____"/>
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-calendar"></span>
+													        </span>
+													    </div>
+													</div>
+										        </div>
+											</div>
+											
+											
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-6">
+														<label id="checkLancamentos" class="control-label" style="margin-top: 10px" for="checkLancamentos">CheckList de Lançamentos</label>
+														<input type="checkbox" id="checkboxLancamentos" name="checkboxLancamentos">
+														<br>
+														<div class="form-group">
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="grupoEventos" name="grupoEventos"> 
+																<label for="grupoEventos">Grupo de Eventos</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="lancarFerias" name="lancarFerias"> 
+																<label for="lancarFerias">Lançar / Finalizar Férias (S-2230)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="admissoes" name="admissoes"> 
+																<label for="admissoes">Admissões (S-2200)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="afastamentos" name="afastamentos"> 
+																<label for="afastamentos">Afastamentos (S-2230)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="pagAutonomo" name="pagAutonomo"> 
+																<label for="pagAutonomo">Pagamento de autônomo (S-2300)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="LancamentoPensoes" name="LancamentoPensoes"> 
+																<label for="LancamentoPensoes">Lançamento / Ajuste de Pensões</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="promocoes" name="promocoes"> 
+																<label for="promocoes">Promoções (S2206)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="movFolha" name="movFolha"> 
+																<label for="movFolha">Movimentação da Folha</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="demissoes" name="demissoes"> 
+																<label for="demissoes">Demissões (S-2299)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="lancamentoLiqRescisao" name="lancamentoLiqRescisao"> 
+																<label for="lancamentoLiqRescisao">Lançamento de líquido de rescisão</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="lancarFinalizarFerias" name="lancarFinalizarFerias"> 
+																<label for="lancarFinalizarFerias">Lançar / Finalizar Férias do mês</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="lancamentoRessarc" name="lancamentoRessarc"> 
+																<label for="lancamentoRessarc">Lançamento de Ressarcimento de Despesas (GRU/ FOTOS/ OUTROS)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="difSalarial" name="difSalarial"> 
+																<label for="difSalarial">Diferença Salarial Admitidos no mês</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="pagSubstituicao" name="pagSubstituicao"> 
+																<label for="pagSubstituicao">Pagamento de Substituição - Marítimos</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="pagDiferencasFunc" name="pagDiferencasFunc"> 
+																<label for="pagDiferencasFunc">Pagamento de Diferenças de Funcionários Promovidos</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="descMedicamentos" name="descMedicamentos"> 
+																<label for="descMedicamentos">Desconto de Medicamentos</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="reembolsoVacina" name="reembolsoVacina"> 
+																<label for="reembolsoVacina">Reembolso de Vacina</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="importarSISRAT" name="importarSISRAT"> 
+																<label for="importarSISRAT">Importar Seções no SISRAT</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<label id="checkAcordoColetivo" class="control-label" style="margin-top: 10px" for="checkAcordoColetivo">Acordo Coletivo</label>
+														<input type="checkbox" id="checkboxAcordoColetivo" name="checkboxAcordoColetivo">
+														<br>
+														<div class="form-group">
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="acordoColetivoAdm" name="acordoColetivoAdm"> 
+																<label for="acordoColetivoAdm">Acordo Coletivo Administrativo (Março)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="acordoColetivoMar" name="acordoColetivoMar"> 
+																<label for="acordoColetivoMar">Acordo Coletivo Marítimo (Abril)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="alteracaoSalarialDir" name="alteracaoSalarialDir"> 
+																<label for="alteracaoSalarialDir">Alteração Salarial Diretores (Maio)</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<label id="abonoPremio" class="control-label" style="margin-top: 10px" for="abonoPremio">Abono / Prêmio</label>
+														<input type="checkbox" id="checkboxAbonoPremio" name="checkboxAbonoPremio">
+														<br>
+														<div class="form-group">
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="abonoAdm" name="abonoAdm"> 
+																<label for="abonoAdm">Abono Administrativo (Novembro)</label>
+															</div>															
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="premioMar" name="premioMar"> 
+																<label for="premioMar">Prêmio Marítimo (Dezembro)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="abonoDir" name="abonoDir"> 
+																<label for="abonoDir">Abono Diretores (Abril)</label>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group">
+													
+													<div class="col-md-6">
+														<label id="checkConferencias" class="control-label" style="margin-top: 10px" for="checkConferencias">Conferências</label>
+														<input type="checkbox" id="checkboxConferencias" name="checkboxConferencias">
+														<br>
+														<div class="form-group">
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferirEventos" name="conferirEventos"> 
+																<label for="conferirEventos">Conferir eventos de Arredondamento (0020 - 0021)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferirPlanilhasCadastros" name="conferirPlanilhasCadastros"> 
+																<label for="conferirPlanilhasCadastros">Conferir Planilhas (Cadastros)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferirPlanilhasLancamentos" name="conferirPlanilhasLancamentos"> 
+																<label for="conferirPlanilhasLancamentos">Conferir Planilhas (Lançamentos)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferirPensoes" name="conferirPensoes"> 
+																<label for="conferirPensoes">Conferir Pensões</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferirEnvelopes" name="conferirEnvelopes"> 
+																<label for="conferirEnvelopes">Conferir Envelopes de Pagamento (Diretores e Gerentes)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesPS" name="conferenciaAjustesPS"> 
+																<label for="conferenciaAjustesPS">Conferência e Ajustes Plano de Saúde</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesPD" name="conferenciaAjustesPD"> 
+																<label for="conferenciaAjustesPD">Conferência e Ajustes Plano de Dental</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesVA" name="conferenciaAjustesVA"> 
+																<label for="conferenciaAjustesVA">Conferência e Ajustes VA</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesVR" name="conferenciaAjustesVR"> 
+																<label for="conferenciaAjustesVR">Conferência e Ajustes VR</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesVT" name="conferenciaAjustesVT"> 
+																<label for="conferenciaAjustesVT">Conferência e Ajustes VT</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesEmprestimo" name="conferenciaAjustesEmprestimo"> 
+																<label for="conferenciaAjustesEmprestimo">Conferência e Ajustes Empréstimo Consignado</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesSeguro" name="conferenciaAjustesSeguro"> 
+																<label for="conferenciaAjustesSeguro">Conferência e Ajustes Seguro de Vida</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="conferenciaAjustesPrevidencia" name="conferenciaAjustesPrevidencia"> 
+																<label for="conferenciaAjustesPrevidencia">Conferência e Ajustes Previdência Privada</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustEducativa" name="confAjustEducativa"> 
+																<label for="confAjustEducativa">Conferência e Ajustes de Ajuda Educativa</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustSindical" name="confAjustSindical"> 
+																<label for="confAjustSindical">Conferência e Ajustes Mensalidade Sindical</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustEstacionamento" name="confAjustEstacionamento"> 
+																<label for="confAjustEstacionamento">Conferência e Ajustes Estacionamento</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustTerceirizadoRH" name="confAjustTerceirizadoRH"> 
+																<label for="confAjustTerceirizadoRH">Conferência e Ajustes Tercerizado Rh</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustJovemAprendiz" name="confAjustJovemAprendiz"> 
+																<label for="confAjustJovemAprendiz">Conferência e Ajustes Tercerizado Jovem Aprendiz</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustTerceirizadoSaudeOcup" name="confAjustTerceirizadoSaudeOcup"> 
+																<label for="confAjustTerceirizadoSaudeOcup">Conferência e Ajustes Tercerizado Saúde Ocupacional</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustConsultoriaDP" name="confAjustConsultoriaDP"> 
+																<label for="confAjustConsultoriaDP">Conferência e Ajustes Consultoria Dp</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="confAjustIntegracoesSisrat" name="confAjustIntegracoesSisrat"> 
+																<label for="confAjustIntegracoesSisrat">Conferência e Ajustes Integrações Sisrat</label>
+															</div>															
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="bloquearFolha" name="bloquearFolha"> 
+																<label for="bloquearFolha">Bloquear Folha (Para não ocorrer alterações)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="lancarFeriasProxMes" name="lancarFeriasProxMes"> 
+																<label for="lancarFeriasProxMes">Lançar Férias do Próximo Mês (Base de Cálculo IRRF)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="salvarHistorico" name="salvarHistorico"> 
+																<label for="salvarHistorico">Salvar Histórico de Seção</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<label id="alteracaoFAP" class="control-label" style="margin-top: 10px" for="alteracaoFAP">Alteração FAP</label>
+														<input type="checkbox" id="checkboxAlteracaoFAP" name="checkboxAlteracaoFAP">
+														<br>
+														<div class="form-group">
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="alteracoesValores" name="alteracoesValores"> 
+																<label for="alteracoesValores">Alterações Valores fixos  encargos (Janeiro)</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<label id="gerarProvisoes" class="control-label" style="margin-top: 10px" for="gerarProvisoes">Gerar Provisões / Encargos</label>
+														<input type="checkbox" id="checkboxGerarProvisoes" name="checkboxGerarProvisoes">
+														<br>
+														<div class="form-group">
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="provisoesFerias" name="provisoesFerias"> 
+																<label for="provisoesFerias">Gerar Provisões de Férias e 13º</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="gerarEncargos" name="gerarEncargos"> 
+																<label for="gerarEncargos">Gerar Encargos (Encargos)</label>
+															</div>
+															<div class="custom-checkbox custom-checkbox-info">
+																<input type="checkbox" id="gerarEncargosProv" name="gerarEncargosProv"> 
+																<label for="gerarEncargosProv">Gerar Encargos (Provisões)</label>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Registrar e conferir lançamentos -->
+									
+									
+									<!-- TAB Gerar / Analisar Arquivos Contábeis -->
+									<div class="tab-pane fade" id="tabGerarArqContabeis">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-4">
+													<label id="gerarArqContabeis" class="control-label" style="margin-top: 10px" for="gerarArqContabeis">Gerar Arquivos Contáveis</label>
+													<input type="checkbox" id="checkboxArqContabeis" name="checkboxArqContabeis">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabFolha" name="arquivosContabFolha"> 
+															<label for="arquivosContabFolha">Gerar Arquivos Contáveis (Líquido Folha - 1MMAAAA)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabEncargos" name="arquivosContabEncargos"> 
+															<label for="arquivosContabEncargos">Gerar Arquivos Contáveis (Encargos - 2MMAAAA)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabProv" name="arquivosContabProv"> 
+															<label for="arquivosContabProv">Gerar Arquivos Contáveis (Provisões - 3MMAAAA)</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label id="gerarArqContabeisTXT" class="control-label" style="margin-top: 10px" for="gerarArqContabeisTXT">Gerar Arquivos Contáveis .TXT</label>
+													<input type="checkbox" id="checkboxArqContabeisTXT" name="checkboxArqContabeisTXT">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabFolhaTXT" name="arquivosContabFolhaTXT"> 
+															<label for="arquivosContabFolhaTXT">Gerar Arquivos Contáveis (Líquido 1 da Folha)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabFolhaTXT2" name="arquivosContabFolhaTXT2"> 
+															<label for="arquivosContabFolhaTXT2">Gerar Arquivos Contáveis (Líquido 2 da Folha)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabFolhaTXT3" name="arquivosContabFolhaTXT3"> 
+															<label for="arquivosContabFolhaTXT3">Gerar Arquivos Contáveis (Líquido 3 da Folha)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabEncargosTXT" name="arquivosContabEncargosTXT"> 
+															<label for="arquivosContabEncargosTXT">Gerar Arquivos Contáveis (Encargos)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivosContabProvTXT" name="arquivosContabProvTXT"> 
+															<label for="arquivosContabProvTXT">Gerar Arquivos Contáveis (Provisões)</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label id="gerarProvisoesContab" class="control-label" style="margin-top: 10px" for="gerarProvisoesContab">Gerar Provisões</label>
+													<input type="checkbox" id="checkboxProvisoesContab" name="checkboxProvisoesContab">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarPlanilhasNET" name="gerarPlanilhasNET"> 
+															<label for="gerarPlanilhasNET">Gerar Planilhas .NET (Conferência da Contabilização)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="enviarArqContabeis" name="enviarArqContabeis"> 
+															<label for="enviarArqContabeis">Enviar Arquivos Contábeis p/ Contabilidade</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Gerar / Analisar Arquivos Contábeis  -->
+									
+									
+									<!-- TAB Gerar / Analisar Resumos de Folha -->
+									<div class="tab-pane fade" id="tabGerarResumosFolha">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-4">
+													<label id="gerarResumosFolha" class="control-label" style="margin-top: 10px" for="gerarResumosFolha">Gerar / Analisar Resumos de Folha</label>
+													<input type="checkbox" id="checkboxGerarResumosFolha" name="checkboxGerarResumosFolha">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoGeral" name="resumoGeral"> 
+															<label for="resumoGeral">Resumo Geral - Todos os Períodos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoAdm" name="resumoAdm"> 
+															<label for="resumoAdm">Resumo ADM - Todos os Períodos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoAdmSemAprendiz" name="resumoAdmSemAprendiz"> 
+															<label for="resumoAdmSemAprendiz">Resumo ADM Sem Aprendiz - Todos os Períodos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoAdmAprendiz" name="resumoAdmAprendiz"> 
+															<label for="resumoAdmAprendiz">Resumo ADM Somente Aprendiz - Todos os Períodos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoMar" name="resumoMar"> 
+															<label for="resumoMar">Resumo MAR - Todos os Períodos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoAutonomos" name="resumoAutonomos"> 
+															<label for="resumoAutonomos">Resumo Autônomos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoDemitidos" name="resumoDemitidos"> 
+															<label for="resumoDemitidos">Resumo Demitidos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoDiretor" name="resumoDiretor"> 
+															<label for="resumoDiretor">Resumo Diretor</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="resumoFolhaPag" name="resumoFolhaPag"> 
+															<label for="resumoFolhaPag">Resumo Folha de Pagamento - Período 2</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarResumos" name="analisarResumos" > 
+															<label for="analisarResumos">Analisar Resumos Gerados</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Gerar / Analisar Resumos de Folha   -->
+									
+																	
+									<!-- TAB Gerar / Analisar Resumos de Folha -->
+									<div class="tab-pane fade" id="tabEsocial">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelEsocial" class="control-label" style="margin-top: 10px" for="panelEsocial">E-Social</label>
+													<input type="checkbox" id="checkboxEsocial" name="checkboxEsocial">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirEventosTabela" name="conferirEventosTabela"> 
+															<label for="conferirEventosTabela">Conferir / Enviar Eventos de Tabela</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirEventosNaoPer" name="conferirEventosNaoPer"> 
+															<label for="conferirEventosNaoPer">Conferir / Enviar Eventos Não Periódicos</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="criarPerApuracao" name="criarPerApuracao"> 
+															<label for="criarPerApuracao">Criar Período de Apuração</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarXML1200" name="gerarXML1200"> 
+															<label for="gerarXML1200">Gerar .XML - Eventos Periódicos (S-1200)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarXML1210" name="gerarXML1210"> 
+															<label for="gerarXML1210">Gerar .XML - Eventos Periódicos (S-1210)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="integrarTAF1200" name="integrarTAF1200"> 
+															<label for="integrarTAF1200">Integrar com TAF - Eventos Periódicos (S-1200)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="integrarTAF1210" name="integrarTAF1210"> 
+															<label for="integrarTAF1210">Integrar com TAF - Eventos Periódicos (S-1210)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="enviarRET1200" name="enviarRET1200"> 
+															<label for="enviarRET1200">Enviar para o RET - Eventos Periódicos (S-1200)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="enviarRET1210" name="enviarRET1210"> 
+															<label for="enviarRET1210">Enviar para o RET - Eventos Periódicos (S-1210)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="atualizarRmTaf" name="atualizarRmTaf"> 
+															<label for="atualizarRmTaf">Atualizar no RM o Status de Integração com TAF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="fechEventosPeriodicos" name="fechEventosPeriodicos"> 
+															<label for="fechEventosPeriodicos">Fechamento dos Eventos Periódicos (S-1299)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="fechEventosPeriodicos1298" name="fechEventosPeriodicos1298"> 
+															<label for="fechEventosPeriodicos1298">Fechamento dos Eventos Periódicos (S-1298) - Se houver necessidade</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarTAF" name="gerarTAF"> 
+															<label for="gerarTAF">Gerar Relatório de Conferência no TAF (INSS / FGTS)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferenciaEncargos" name="conferenciaEncargos"> 
+															<label for="conferenciaEncargos">Fazer Conferência dos Encargos</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Gerar / Analisar Resumos de Folha  -->
+									
+							
+									<!-- TAB Contracheque -->
+									<div class="tab-pane fade" id="tabContracheque">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelContracheque" class="control-label" style="margin-top: 10px" for="panelContracheque">Envio e Disponibilização dos Contracheques</label>
+													<input type="checkbox" id="checkboxContracheque" name="checkboxContracheque">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="msgContracheque" name="msgContracheque"> 
+															<label for="msgContracheque">Verificar com GRH / DRH a mensagem Contracheque</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="enviarContrachMar" name="enviarContrachMar"> 
+															<label for="enviarContrachMar">Enviar Contracheque Marítimo</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="disponibContracheque" name="disponibContracheque"> 
+															<label for="disponibContracheque">Disponibilizar Contracheque no Portal ADM</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emailCentralBrasil" name="emailCentralBrasil"> 
+															<label for="emailCentralBrasil">Enviar E-mail para a Central do Brasil</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Contracheque  -->
+																
+									<!-- TAB Folha Pgto -->
+									<div class="tab-pane fade" id="tabFolhaPgto">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelFolhaPgto" class="control-label" style="margin-top: 10px" for="panelFolhaPgto">Gerar Relatórios de Pgto Folha</label>
+													<input type="checkbox" id="checkboxFolhaPgto" name="checkboxFolhaPgto">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirPlanilha" name="emitirPlanilha"> 
+															<label for="emitirPlanilha">Emitir Planilha - Resumo de Pagamento</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirRelFunc" name="emitirRelFunc"> 
+															<label for="emitirRelFunc">Emitir Relação de Funcionários</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirRelPens" name="emitirRelPens"> 
+															<label for="emitirRelPens">Emitir Relação de Penssionistas (Com conta Santander)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirRelPens2" name="emitirRelPens2"> 
+															<label for="emitirRelPens2">Emitir Relação de Penssionistas (Sem conta Santander)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirRelPratic" name="emitirRelPratic"> 
+															<label for="emitirRelPratic">Emitir Relação de Praticantes Desligados</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Folha Pgto  -->
+																
+									<!-- TAB Arq Bancários -->
+									<div class="tab-pane fade" id="tabArqBancarios">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelArqBancarios" class="control-label" style="margin-top: 10px" for="panelArqBancarios">Gerar, importar, conferir e validar arquivos bancários </label>
+													<input type="checkbox" id="checkboxArqBancarios" name="checkboxArqBancarios">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="importacaoFolha" name="importacaoFolha"> 
+															<label for="importacaoFolha">Gerar Arquivos de Importação da Folha</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="importarCISA" name="importarCISA"> 
+															<label for="importarCISA">Importar Arquivos Bancários</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirArquivos" name="conferirArquivos"> 
+															<label for="conferirArquivos">Conferir / Validar Arquivos Importados</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB Arq Bancários -->
+									
+									<!-- TAB FGTS -->
+									<div class="tab-pane fade" id="tabFgtsAdmMar">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelFgtsAdm" class="control-label" style="margin-top: 10px">FGTS Administrativo </label>
+													<input type="checkbox" id="checkboxFgtsAdm" name="checkboxFgtsAdm">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="folhaPagAdm" name="folhaPagAdm"> 
+															<label for="folhaPagAdm">Resumo de Folha de Pagamento Administrativo (Sem Aprendiz)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="folhaPagAdmAprendiz" name="folhaPagAdmAprendiz"> 
+															<label for="folhaPagAdmAprendiz">Resumo de Folha de Pagamento Administrativo (Somente Aprendiz)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="flagsFGTS" name="flagsFGTS"> 
+															<label for="flagsFGTS">Liberar Flags de FGTS</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="compararFolhaAnalitica" name="compararFolhaAnalitica"> 
+															<label for="compararFolhaAnalitica">Comparar Folha Analítica _NET.txt (Com Arquivos .SFP - SEFIP)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarSEFIP" name="gerarSEFIP"> 
+															<label for="gerarSEFIP">Gerar Arquivos SEFIP.RE - ADM</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="importarAppSEFIP" name="importarAppSEFIP"> 
+															<label for="importarAppSEFIP">Importar no Aplicativo SEFIP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarInconsistencias" name="analisarInconsistencias"> 
+															<label for="analisarInconsistencias">Analisar / Corrigir Inconsistências</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarSFP" name="salvarSFP"> 
+															<label for="salvarSFP">Salvar arquivo .SFP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarRelSEFIP" name="gerarRelSEFIP"> 
+															<label for="gerarRelSEFIP">Gerar Relatório SEFIP (Analitico GRF / RE / Comprov. Declaração Prev / GPS / Analítico GPS)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarValoresBI" name="analisarValoresBI"> 
+															<label for="analisarValoresBI">Analisar e Conferir Valores no BI</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conectividadeSocial" name="conectividadeSocial"> 
+															<label for="conectividadeSocial">Transmitir o Arquivo .SFP na Conectividade Social</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarZIP" name="salvarZIP"> 
+															<label for="salvarZIP">Salvar o arquivo .ZIP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="transmitirZIP" name="transmitirZIP"> 
+															<label for="transmitirZIP">Transmitir o arquivo .ZIP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarXmlPdf" name="salvarXmlPdf"> 
+															<label for="salvarXmlPdf">Salvar os arquivos .XML e .PDF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="appSEFIP" name="appSEFIP"> 
+															<label for="appSEFIP">No app SEFIP - Importar o arquivo .ICP com extensão .XML para emissão da GRF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="imprimirSalvarGED" name="imprimirSalvarGED"> 
+															<label for="imprimirSalvarGED">Imprimir e Salvar GRF no GED</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="pagamentoGRF" name="pagamentoGRF"> 
+															<label for="pagamentoGRF">Solicitar Pagamento GRF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="backupSEFIP" name="backupSEFIP"> 
+															<label for="backupSEFIP">Fazer Backup SEFIP / Salvar no GED</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivarDoc" name="arquivarDoc"> 
+															<label for="arquivarDoc">Arquivar documentos Digitalizados e Físicos</label>
+														</div>
+													</div>
+												</div>
+												
+												<div class="col-md-6">
+													<label id="panelFgtsAdm" class="control-label" style="margin-top: 10px">FGTS Marítimo </label>
+													<input type="checkbox" id="checkboxFgtsMar" name="checkboxFgtsMar">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="folhaPagMar" name="folhaPagMar"> 
+															<label for="folhaPagMar">Resumo de Folha de Pagamento Marítimo</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="flagsFGTSMar" name="flagsFGTSMar"> 
+															<label for="flagsFGTSMar">Liberar Flags de FGTS</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="compararFolhaAnaliticaMar" name="compararFolhaAnaliticaMar"> 
+															<label for="compararFolhaAnaliticaMar">Comparar Folha Analítica _NET.txt (Com Arquivos .SFP - SEFIP)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarSEFIPMar" name="gerarSEFIPMar"> 
+															<label for="gerarSEFIPMar">Gerar Arquivos SEFIP.RE - ADM</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="importarAppSEFIPMar" name="importarAppSEFIPMar"> 
+															<label for="importarAppSEFIPMar">Importar no Aplicativo SEFIP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarInconsistenciasMar" name="analisarInconsistenciasMar"> 
+															<label for="analisarInconsistenciasMar">Analisar / Corrigir Inconsistências</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarSFPMar" name="salvarSFPMar"> 
+															<label for="salvarSFPMar">Salvar arquivo .SFP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarRelSEFIPMar" name="gerarRelSEFIPMar"> 
+															<label for="gerarRelSEFIPMar">Gerar Relatório SEFIP (Analitico GRF / RE / Comprov. Declaração Prev / GPS / Analítico GPS)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarValoresBIMar" name="analisarValoresBIMar"> 
+															<label for="analisarValoresBIMar">Analisar e Conferir Valores no BI</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conectividadeSocialMar" name="conectividadeSocialMar"> 
+															<label for="conectividadeSocialMar">Transmitir o Arquivo .SFP na Conectividade Social</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarZIPMar" name="salvarZIPMar"> 
+															<label for="salvarZIPMar">Salvar o arquivo .ZIP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="transmitirZIPMar" name="transmitirZIPMar"> 
+															<label for="transmitirZIPMar">Transmitir o arquivo .ZIP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarXmlPdfMar" name="salvarXmlPdfMar"> 
+															<label for="salvarXmlPdfMar">Salvar os arquivos .XML e .PDF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="appSEFIPMar" name="appSEFIPMar"> 
+															<label for="appSEFIPMar">No app SEFIP - Importar o arquivo .ICP com extensão .XML para emissão da GRF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="imprimirSalvarGEDMar" name="imprimirSalvarGEDMar"> 
+															<label for="imprimirSalvarGEDMar">Imprimir e Salvar GRF no GED</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="pagamentoGRFMar" name="pagamentoGRFMar"> 
+															<label for="pagamentoGRFMar">Solicitar Pagamento GRF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="backupSEFIPMar" name="backupSEFIPMar"> 
+															<label for="backupSEFIPMar">Fazer Backup SEFIP / Salvar no GED</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="arquivarDocMar" name="arquivarDocMar"> 
+															<label for="arquivarDocMar">Arquivar documentos Digitalizados e Físicos</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB FGTS -->
+																
+									<!-- TAB INSS / IRFF -->
+									<div class="tab-pane fade" id="tabIrrfInss">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelIrrf" class="control-label" style="margin-top: 10px">IRRF </label>
+													<input type="checkbox" id="checkboxIrrf" name="checkboxIrrf">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirPlanilhasIRRF" name="emitirPlanilhasIRRF"> 
+															<label for="emitirPlanilhasIRRF">Emitir / Analisar Planilhas de Conferência de IRRF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirEsocial" name="conferirEsocial"> 
+															<label for="conferirEsocial">Conferir valores no e-Social (Código 0561/0588)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarXMLEsocial" name="salvarXMLEsocial"> 
+															<label for="salvarXMLEsocial">Salvar .XML e-Social</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirValoresBI" name="conferirValoresBI"> 
+															<label for="conferirValoresBI">Conferir Valores no BI (Código 0561/0588)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarPossiveisDivergencias" name="analisarPossiveisDivergencias"> 
+															<label for="analisarPossiveisDivergencias">Analisar / Ajustar possíveis Divergências</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="tabelaSELIC" name="tabelaSELIC"> 
+															<label for="tabelaSELIC">Atualizar tabelas e índices</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarDARFRefmes" name="gerarDARFRefmes"> 
+															<label for="gerarDARFRefmes">Gerar DARF incluindo descrição com referência do mês</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="aprovacaoPafDARF" name="aprovacaoPafDARF"> 
+															<label for="aprovacaoPafDARF">Solicitar Aprovação de Pagamento do DARF</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label id="panelInss" class="control-label" style="margin-top: 10px">INSS </label>
+													<input type="checkbox" id="checkboxInss" name="checkboxInss">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="gerarPlanilhasINSS" name="gerarPlanilhasINSS"> 
+															<label for="gerarPlanilhasINSS">Gerar Planilhas de Conferência do INSS</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirRetencaoPetrobras" name="conferirRetencaoPetrobras"> 
+															<label for="conferirRetencaoPetrobras">Solicitar / Conferir Valores de retenção da Petrobras (Créditos Vinculados)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirCredito" name="conferirCredito"> 
+															<label for="conferirCredito">Conferir Lançamento do Crédito vinculado na DCTFWeb</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="solicitarValoresPrestServico" name="solicitarValoresPrestServico"> 
+															<label for="solicitarValoresPrestServico">Solicitar / Conferir valores dos prestadores de serviço (Retenção Lei: 9.711/98)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirLancamentoRetencao" name="conferirLancamentoRetencao"> 
+															<label for="conferirLancamentoRetencao">Conferir Lançamento da Retenção da Lei: 9.711/98 na DCTFWeb</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="conferirEsocialValores" name="conferirEsocialValores"> 
+															<label for="conferirEsocialValores">Conferir no e-Social os valores gerados</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarTotalizadores" name="analisarTotalizadores"> 
+															<label for="analisarTotalizadores">Analisar totalizadores do empregador da contribuição previdenciária</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="lancarSISRATPetrobras" name="lancarSISRATPetrobras"> 
+															<label for="lancarSISRATPetrobras">Lançar no SISRAT os valores da retenção da Petrobras</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="lancarSISRATPrestServico" name="lancarSISRATPrestServico"> 
+															<label for="lancarSISRATPrestServico">Lançar no SISRAT os valores dos Prestadores de Serviço</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="analisarValoresBIINSS" name="analisarValoresBIINSS"> 
+															<label for="analisarValoresBIINSS">Analisar e Conferir Valores no BI</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="periodoApuracao" name="periodoApuracao"> 
+															<label for="periodoApuracao">Após Conferência / Fechamento do Período de Apuração</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="DCTFWebEcad" name="DCTFWebEcad"> 
+															<label for="DCTFWebEcad">Assinar e Transmitir DCTFWeb no Site ECAC</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="downloadRecibo" name="downloadRecibo"> 
+															<label for="downloadRecibo">Fazer Download do recibo de .XML de saída</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirRelatoriosINSS" name="emitirRelatoriosINSS"> 
+															<label for="emitirRelatoriosINSS">Emitir os Relatórios (Declaração Completa / Rel. de Débito e Crédito / Resumos de Déb. e Créd.)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="emitirDARFINSS" name="emitirDARFINSS"> 
+															<label for="emitirDARFINSS">Emitir DARF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="solicitarPagDARFINSS" name="solicitarPagDARFINSS"> 
+															<label for="solicitarPagDARFINSS">Solicitar Pagamento DARF</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="salvarArquivo" name="salvarArquivo"> 
+															<label for="salvarArquivo">Salvar arquivo Físico e Digital</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB FGTS -->
+																
+									<!-- TAB REPASSES E BENEFÍCIOS -->
+									<div class="tab-pane fade" id="tabRepassesBenef">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelRepasses" class="control-label" style="margin-top: 10px" for="panelRepasses">Repasses da Folha - Sindicatos</label>
+													<input type="checkbox" id="checkboxRepassesSindicatos" name="checkboxRepassesSindicatos">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="mensSindical" name="mensSindical"> 
+															<label for="mensSindical">Mensalidade Sindical</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="ajudaEducativa" name="ajudaEducativa"> 
+															<label for="ajudaEducativa">Ajuda Educativa</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="contSindicalAnual" name="contSindicalAnual"> 
+															<label for="contSindicalAnual">Contribuição Sindical Anual</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="empConsignado" name="empConsignado"> 
+															<label for="empConsignado">Empréstimo Consignado</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<label id="panelBeneficios" class="control-label" style="margin-top: 10px" for="panelBeneficios">Repasses da Folha - Benefícios</label>
+													<input type="checkbox" id="checkboxRepassesBeneficios" name="checkboxRepassesBeneficios">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="planoSaude" name="planoSaude"> 
+															<label for="planoSaude">Plano de Saúde</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="planoOdonto" name="planoOdonto"> 
+															<label for="planoOdonto">Plano Odontológico</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="seguroVida" name="seguroVida"> 
+															<label for="seguroVida">Seguro de Vida</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="valeAlimentacRefeic" name="valeAlimentacRefeic"> 
+															<label for="valeAlimentacRefeic">Vale Alimentação/refeição</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="valeTransporte" name="valeTransporte"> 
+															<label for="valeTransporte">Vale Transporte</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="previdencPrivada" name="previdencPrivada"> 
+															<label for="previdencPrivada">Previdência Privada</label>
+														</div>
+													</div>
+												</div>												
+												<div class="col-md-3">
+													<label id="panelTerceirizadosConsultores" class="control-label" style="margin-top: 10px" for="panelTerceirizadosConsultores">Serviços Tercerizados/Consultores</label>
+													<input type="checkbox" id="checkboxServTercConsult" name="checkboxServTercConsult">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="consultoriaDP" name="consultoriaDP"> 
+															<label for="consultoriaDP">Consultoria DP</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="tercSaudeOcupacional" name="tercSaudeOcupacional"> 
+															<label for="tercSaudeOcupacional">Tercerizado Saúde Ocupacional</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="terceirizadoJovemAprendiz" name="terceirizadoJovemAprendiz"> 
+															<label for="terceirizadoJovemAprendiz">Tercerizado Jovem Aprendiz</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="terceirizadoRH" name="terceirizadoRH"> 
+															<label for="terceirizadoRH">Tercerizado Rh</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="terceirizadoEstacionamento" name="terceirizadoEstacionamento"> 
+															<label for="terceirizadoEstacionamento">Estacionamento</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="terceirizadoRecrutRH" name="terceirizadoRecrutRH"> 
+															<label for="terceirizadoRecrutRH">Recrutadores de Rh</label>
+														</div>
+													</div>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+									<!-- TAB REPASSES E BENEFÍCIOS --> 
+									
+							    	<!-- TAB COMPETENCIA DE FOLHA -->
+									<div class="tab-pane fade" id="tabCompFolha">
+										<div class="panel-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label id="panelCompFolha" class="control-label" style="margin-top: 10px" for="panelCompFolha">Virar Competência de Folha </label>
+													<input type="checkbox" id="checkboxCompFolha" name="checkboxCompFolha">
+													<br>
+													<div class="form-group">
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="importSessoesSisrat" name="importSessoesSisrat"> 
+															<label for="importSessoesSisrat">Importar Sessoes no Sisrat</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="solicBkpCbd" name="solicBkpCbd"> 
+															<label for="solicBkpCbd">Solicitar Back Up Cbd</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="liberarFlagsFGTS" name="liberarFlagsFGTS"> 
+															<label for="liberarFlagsFGTS">Liberar Flags do FGTS</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="acertoPerAquisitivo" name="acertoPerAquisitivo"> 
+															<label for="acertoPerAquisitivo">Acerto do Período Aquisitivo (Férias)</label>
+														</div>
+														<div class="custom-checkbox custom-checkbox-info">
+															<input type="checkbox" id="virarCompetencias" name="virarCompetencias"> 
+															<label for="virarCompetencias">Virar Competências</label>
+														</div>														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- TAB COMPETENCIA DE FOLHA -->
+																	
+								</div>
+							</div>
+						</div>
+					</div>
+				<!-- </div> -->
+				</div>
+				
+				
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_ArquivosContabeis">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="flaticon flaticon-check-circle icon-sm"></span>&nbsp;Arquivos Contábeis
+								</a>
+							</h2>
+						</div>
+						<div id="collapseAprovRelatoriosPgto">
+							<div class="panel-body">
+							
+								<ul class="nav nav-tabs custom-nav-tabs clearfix" id="arqContabTabs" role="tablist">
+									<li class="active" data-atividade="43,174">
+										<a href="#tabArqContabAnexos" role="tab" data-toggle="tab">
+											<i class="fluigicon fluigicon-file-upload icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+											Anexos
+										</a>
+									</li>
+								    <li data-atividade="24">
+								    	<a href="#tabArqContabAprov" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Aprovação
+								    	</a>
+								    </li>								    
+								</ul>
+								
+								<div class="tab-content custom-tab-content">
+									<div class="tab-pane fade active in" id="tabArqContabAnexos">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="table-responsive">
+													<table tablename="tblArqContabAnexos" id="tblArqContabAnexos" class="table table-bordered" nodeletebutton=true noaddbutton=true>
+													    <thead class="fs-display-none">
+													        <tr>
+																<td></td>
+													            <td></td>
+																<td class="tdDeleteRow"></td>
+													        </tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td class="fs-v-align-middle fs-font-bold count" style="width: 1%;"></td>
+																<td>
+																	<div class="row">
+																		<div class="col-sm-8 col-md-8">
+																			<div class="form-group">
+																				<label class="control-label">Anexo</label>
+																				<div class="componentAnexo">
+																					<div class="input-group">
+																						<input type="hidden" id="fdAnexoArqContab" name="fdAnexoArqContab"  class="descAnexo" />
+																						<input type="text" id="fnAnexoArqContab" name="fnAnexoArqContab" class="form-control inputAnexo input-sm" placeholder="Selecione um arquivo" readonly />
+																					</div>
+																					<div class="icones">
+																						<button type="button" class="btnUpFile btn btn-success btn-sm" data-acao="upload" onclick="anexo(event)" title="Selecionar">
+																							<i class="fluigicon fluigicon-file-upload icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnViewerFile btn btn-info btn-sm" data-acao="viewer" onclick="anexo(event)" title="Visualizar" disabled>
+																							<i class="fluigicon fluigicon-eye-open icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnDownloadFile btn btn-info btn-sm" data-acao="download" onclick="anexo(event)" title="Download" disabled>
+																							<i class="fluigicon fluigicon-download icon-sm"></i>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-sm-4 col-md-4">
+																			<div class="checkbox fs-lg-margin-top">
+																				<label>
+																					<input type="checkbox" name="visivelFinArqContab" id="visivelFinArqContab" class="visivelFin">Visível para o financeiro?
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+																<td class="fs-v-align-middle fs-text-center tdDeleteRow" style="width: 1%;">
+																	<div class="lixeira">
+																		<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover" onclick="destroyRowTable(this)"></i>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+										       		</table>
+												</div>
+											</div>
+											<div class="col-md-12 btnAddNewRow" id="btnAddNewRowArqContab">
+												<button class="btn btn-sm btn-success" title="Novo Anexo" onClick="addNewRowTable('tblArqContabAnexos', 'fdAnexoArqContab')">Novo Anexo</button>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabArqContabAprov">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="arqContabRespNome">Responsável</label> 
+													<input type="hidden" id="arqContabRespMat" name="arqContabRespMat" />
+													<input type="text" class="form-control" id="arqContabRespNome" name="arqContabRespNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="arqContabData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="arqContabData" name="arqContabData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="arqContabHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="arqContabHora" name="arqContabHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label" for="decisaoArqContab">Decisão</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoArqContab" id="decisaoArqContab" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoArqContab" id="decisaoArqContab" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="motivoReprovacaoArqContab">Motivo da reprovação </label>	
+													<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoArqContab" id="motivoReprovacaoArqContab" readonly></textarea>
+												</div>
+											</div>
+										</div>
+									</div>	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_AprovarRelatorios">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="flaticon flaticon-check-circle icon-sm"></span>&nbsp;Relatórios de Pagamento
+								</a>
+							</h2>
+						</div>
+						<div id="collapseAprovRelatoriosPgto">
+							<div class="panel-body">
+							
+								<ul class="nav nav-tabs custom-nav-tabs clearfix" id="relatPgtoTabs" role="tablist">
+									<li class="active" data-atividade="63">
+										<a href="#relatPgtoAnexos" role="tab" data-toggle="tab">
+											<i class="fluigicon fluigicon-file-upload icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+											Anexos
+										</a>
+									</li>
+								    <li data-atividade="17">
+								    	<a href="#relatPgtoAprovGRH" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Aprovação GRH
+								    	</a>
+								    </li>
+								    <li data-atividade="18">
+									    <a href="#relatPgtoAprovDRH" role="tab" data-toggle="tab">
+									    	<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+									    	Aprovação DRH
+									    </a>
+								    </li>
+								    <li class="disabled" data-atividade="195">
+								    	<a href="#relatPgtoPagamento" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-money icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Pagamento
+								    	</a>
+								    </li>
+								</ul>
+								
+								<div class="tab-content custom-tab-content">
+									<div class="tab-pane fade active in" id="relatPgtoAnexos">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="table-responsive">
+													<table tablename="tblReltPgtoAnexos" id="tblReltPgtoAnexos" class="table table-bordered" nodeletebutton=true noaddbutton=true>
+													    <thead class="fs-display-none">
+													        <tr>
+																<td></td>
+													            <td></td>
+																<td class="tdDeleteRow"></td>
+													        </tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td class="fs-v-align-middle fs-font-bold count" style="width: 1%;"></td>
+																<td>
+																	<div class="row">
+																		<div class="col-sm-8 col-md-8">
+																			<div class="form-group">
+																				<label class="control-label">Anexo</label>
+																				<div class="componentAnexo">
+																					<div class="input-group">
+																						<input type="hidden" id="fdAnexoRelPgto" name="fdAnexoRelPgto"  class="descAnexo" />
+																						<input type="text" id="fnAnexoRelPgto" name="fnAnexoRelPgto" class="form-control inputAnexo input-sm" placeholder="Selecione um arquivo" readonly />
+																					</div>
+																					<div class="icones">
+																						<button type="button" class="btnUpFile btn btn-success btn-sm" data-acao="upload" onclick="anexo(event)" title="Selecionar">
+																							<i class="fluigicon fluigicon-file-upload icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnViewerFile btn btn-info btn-sm" data-acao="viewer" onclick="anexo(event)" title="Visualizar" disabled>
+																							<i class="fluigicon fluigicon-eye-open icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnDownloadFile btn btn-info btn-sm" data-acao="download" onclick="anexo(event)" title="Download" disabled>
+																							<i class="fluigicon fluigicon-download icon-sm"></i>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-sm-4 col-md-4">
+																			<div class="checkbox fs-lg-margin-top">
+																				<label>
+																					<input type="checkbox" name="visivelFinRelPgto" id="visivelFinRelPgto" class="visivelFin">Visível para o financeiro?
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+																<td class="fs-v-align-middle fs-text-center tdDeleteRow" style="width: 1%;">
+																	<div class="lixeira">
+																		<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover" onclick="destroyRowTable(this)"></i>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+										       		</table>
+												</div>
+											</div>
+											<div class="col-md-12 btnAddNewRow" id="btnAddNewRowRelPgto">
+												<button class="btn btn-sm btn-success" title="Novo Anexo" onClick="addNewRowTable('tblReltPgtoAnexos', 'fdAnexoRelPgto')">Novo Anexo</button>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="relatPgtoAprovGRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoRespGrhNome">Responsável</label> 
+													<input type="hidden" id="relatPgtoRespGrhMat" name="relatPgtoRespGrhMat" />
+													<input type="text" class="form-control" id="relatPgtoRespGrhNome" name="relatPgtoRespGrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoGrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="relatPgtoGrhData" name="relatPgtoGrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoGrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="relatPgtoGrhHora" name="relatPgtoGrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label" for="decisaoGRH">Decisão GRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGRH" id="decisaoGRH" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGRH" id="decisaoGRH" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="motivoReprovacaoGRH">Motivo da reprovação </label>	
+													<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoGRH" id="motivoReprovacaoGRH" readonly></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="relatPgtoAprovDRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoRespDrhNome">Responsável</label> 
+													<input type="hidden" id="relatPgtoRespDrhMat" name="relatPgtoRespDrhMat" />
+													<input type="text" class="form-control" id="relatPgtoRespDrhNome" name="relatPgtoRespDrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoDrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="relatPgtoDrhData" name="relatPgtoDrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoDrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="relatPgtoDrhHora" name="relatPgtoDrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label" for="decisaoDRH">Decisão DRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDRH" id="decisaoDRH" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDRH" id="decisaoDRH" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="motivoReprovacaoDRH">Motivo da reprovação </label>	
+													<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoDRH" id="motivoReprovacaoDRH" readonly></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="relatPgtoPagamento">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoRespNome">Responsável pelo Pagamento</label> 
+													<input type="hidden" id="relatPgtoRespMat" name="relatPgtoRespMat" />
+													<input type="text" class="form-control" id="relatPgtoRespNome" name="relatPgtoRespNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="relatPgtoData" name="relatPgtoData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="relatPgtoHora" name="relatPgtoHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Pagamento realizado?</label>
+												<div class="radio">		
+													<label>			
+														<input name="relatPgtoRealizado" id="relatPgtoRealizadoTotal" value="total" type="radio">			
+														<span class="">Pagamento Total</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="relatPgtoRealizado" id="relatPgtoRealizadoParcial" value="parcial" type="radio"> 			
+														<span class="">Pagamento Parcial</span>		
+													</label> 
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="relatPgtoRealizado" id="relatPgtoRealizadoNaoReal" value="naoRealizado" type="radio"> 			
+														<span class="">Pagamento Não realizado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="relatPgtoMotivo">Motivo </label>	
+													<textarea rows="3" cols="3" class="form-control" name="relatPgtoMotivo" id="relatPgtoMotivo" readonly></textarea>
+												</div>
+											</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_AprovarFGTS">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="flaticon flaticon-check-circle icon-sm"></span>&nbsp;FGTS
+								</a>
+							</h2>
+						</div>
+						<div id="collapseAprovFGTS">
+							<div class="panel-body">
+								<ul class="nav nav-tabs custom-nav-tabs clearfix" id="fgtsTabs" role="tablist">
+									<li class="active" data-atividade="72">
+										<a href="#tabFgtsAnexos" role="tab" data-toggle="tab">
+											<i class="fluigicon fluigicon-file-upload icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+											Anexos
+										</a>
+									</li>
+								    <li data-atividade="100">
+								    	<a href="#tabFgtsAprovGRH" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Aprovação GRH
+								    	</a>
+								    </li>
+								    <li data-atividade="102">
+									    <a href="#tabFgtsAprovDRH" role="tab" data-toggle="tab">
+									    	<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+									    	Aprovação DRH
+									    </a>
+								    </li>
+								    <li data-atividade="210">
+								    	<a href="#tabFgtsPagamento" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-money icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Pagamento
+								    	</a>
+								    </li>
+								</ul>
+								
+								<div class="tab-content custom-tab-content">
+									<div class="tab-pane fade active in" id="tabFgtsAnexos">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="table-responsive">
+													<table tablename="tblFgtsAnexos" id="tblFgtsAnexos" class="table table-bordered" nodeletebutton=true noaddbutton=true>
+													    <thead class="fs-display-none">
+													        <tr>
+																<td></td>
+													            <td></td>
+																<td class="tdDeleteRow"></td>
+													        </tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td class="fs-v-align-middle fs-font-bold count" style="width: 1%;"></td>
+																<td>
+																	<div class="row">
+																		<div class="col-sm-8 col-md-8">
+																			<div class="form-group">
+																				<label class="control-label">Anexo</label>
+																				<div class="componentAnexo">
+																					<div class="input-group">
+																						<input type="hidden" id="fdAnexoFgts" name="fdAnexoFgts"  class="descAnexo" />
+																						<input type="text" id="fnAnexoFgts" name="fnAnexoFgts" class="form-control inputAnexo input-sm" placeholder="Selecione um arquivo" readonly />
+																					</div>
+																					<div class="icones">
+																						<button type="button" class="btnUpFile btn btn-success btn-sm" data-acao="upload" onclick="anexo(event)" title="Selecionar">
+																							<i class="fluigicon fluigicon-file-upload icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnViewerFile btn btn-info btn-sm" data-acao="viewer" onclick="anexo(event)" title="Visualizar" disabled>
+																							<i class="fluigicon fluigicon-eye-open icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnDownloadFile btn btn-info btn-sm" data-acao="download" onclick="anexo(event)" title="Download" disabled>
+																							<i class="fluigicon fluigicon-download icon-sm"></i>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-sm-4 col-md-4">
+																			<div class="checkbox fs-lg-margin-top">
+																				<label>
+																					<input type="checkbox" name="visivelFinFgts" id="visivelFinFgts" class="visivelFin">Visível para o financeiro?
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+																<td class="fs-v-align-middle fs-text-center tdDeleteRow" style="width: 1%;">
+																	<div class="lixeira">
+																		<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover" onclick="destroyRowTable(this)"></i>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+										       		</table>
+												</div>
+											</div>
+											<div class="col-md-12 btnAddNewRow" id="btnAddNewRowFgts">
+												<button class="btn btn-sm btn-success" title="Novo Anexo" onClick="addNewRowTable('tblFgtsAnexos', 'fdAnexoFgts')">Novo Anexo</button>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabFgtsAprovGRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="fgtsRespGrhNome">Responsável</label> 
+													<input type="hidden" id="fgtsRespGrhMat" name="fgtsRespGrhMat" />
+													<input type="text" class="form-control" id="fgtsRespGrhNome" name="fgtsRespGrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="fgtsGrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="fgtsGrhData" name="fgtsGrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="fgtsGrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="fgtsGrhHora" name="fgtsGrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label" for="decisaoGrhFGTS">Decisão GRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGrhFGTS" id="decisaoGrhFGTS" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGrhFGTS" id="decisaoGrhFGTS" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<label class="control-label" for="motivoReprovacaoGrhFGTS">Motivo da reprovação </label>	
+												<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoGrhFGTS" id="motivoReprovacaoGrhFGTS" readonly></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabFgtsAprovDRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="fgtsRespDrhNome">Responsável</label> 
+													<input type="hidden" id="fgtsRespDrhMat" name="fgtsRespDrhMat" />
+													<input type="text" class="form-control" id="fgtsRespDrhNome" name="fgtsRespDrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="fgtsDrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="fgtsDrhData" name="fgtsDrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="fgtsDrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="fgtsDrhHora" name="fgtsDrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label" for="decisaoDrhFGTS">Decisão DRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDrhFGTS" id="decisaoDrhFGTS" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDrhFGTS" id="decisaoDrhFGTS" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<label class="control-label" for="motivoReprovacaoDrhFGTS">Motivo da reprovação </label>	
+												<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoDrhFGTS" id="motivoReprovacaoDrhFGTS" readonly></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabFgtsPagamento">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="fgtsRespNome">Responsável pelo Pagamento</label> 
+													<input type="hidden" id="fgtsRespMat" name="fgtsRespMat" />
+													<input type="text" class="form-control" id="fgtsRespNome" name="fgtsRespNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="fgtsData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="fgtsData" name="fgtsData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="fgtsHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="fgtsHora" name="fgtsHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Pagamento realizado?</label>
+												<div class="radio">		
+													<label>			
+														<input name="fgtsRealizado" id="fgtsRealizadoTotal" value="total" type="radio">			
+														<span class="">Pagamento Total</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="fgtsRealizado" id="fgtsRealizadoParcial" value="parcial" type="radio"> 			
+														<span class="">Pagamento Parcial</span>		
+													</label> 
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="fgtsRealizado" id="fgtsRealizadoNaoReal" value="naoRealizado" type="radio"> 			
+														<span class="">Pagamento Não realizado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="fgtsMotivo">Motivo </label>	
+													<textarea rows="3" cols="3" class="form-control" name="fgtsMotivo" id="fgtsMotivo" readonly></textarea>
+												</div>
+											</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel-group" style="display: none;">
+					<div class="panel panel-default" id="panel_AprovarDARF">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="flaticon flaticon-check-circle icon-sm"></span>&nbsp;Aprovar DARF IRRF
+								</a>
+							</h2>
+						</div>
+						<div id="collapseAprovDARF">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-2">
+										<label class="control-label" for="decisaoDrhDARF">Decisão DRH</label>
+										<div class="radio">		
+											<label>			
+												<input name="decisaoDrhDARF" id="decisaoDrhDARF" value="Aprovado" type="radio">			
+												<span class="">Aprovado</span>		
+											</label>
+										</div>
+										<div class="radio">		
+											<label>			
+												<input name="decisaoDrhDARF" id="decisaoDrhDARF" value="Reprovado" type="radio"> 			
+												<span class="">Reprovado</span>		
+											</label> 
+										</div>
+									</div>
+									<div class="col-md-10">
+										<label class="control-label" for="motivoReprovacaoDrhDARF">Motivo da reprovação </label>	
+										<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoDrhDARF" id="motivoReprovacaoDrhDARF"></textarea>
+									</div>
+								</div> <!-- row -->
+								<div class="row" style="padding-top: 20px;">
+									<div class="col-md-2">
+										<label class="control-label" for="decisaoGrhDARF">Decisão GRH</label>
+										<div class="radio">		
+											<label>			
+												<input name="decisaoGrhDARF" id="decisaoGrhDARF" value="Aprovado" type="radio">			
+												<span class="">Aprovado</span>		
+											</label>
+										</div>
+										<div class="radio">		
+											<label>			
+												<input name="decisaoGrhDARF" id="decisaoGrhDARF" value="Reprovado" type="radio"> 			
+												<span class="">Reprovado</span>		
+											</label> 
+										</div>
+									</div>
+									<div class="col-md-10">
+										<label class="control-label" for="motivoReprovacaoGrhDARF">Motivo da reprovação </label>	
+										<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoGrhDARF" id="motivoReprovacaoGrhDARF"></textarea>
+									</div>
+								</div> <!-- row -->
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_AprovarINSS">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="flaticon flaticon-check-circle icon-sm"></span>&nbsp;DARF IRFF / REINF PETROBRÁS
+								</a>
+							</h2>
+						</div>
+						<div id="collapseAprovINSS">
+							<div class="panel-body">
+								<ul class="nav nav-tabs custom-nav-tabs clearfix" id="inssTabs" role="tablist">
+									<li class="active" data-atividade="83, 258">
+										<a href="#tabInssAnexos" role="tab" data-toggle="tab">
+											<i class="fluigicon fluigicon-file-upload icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+											Anexos
+										</a>
+									</li>
+								    <li data-atividade="112">
+								    	<a href="#tabInssAprovGRH" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Aprovação GRH
+								    	</a>
+								    </li>
+								    <li data-atividade="111">
+									    <a href="#tabInssAprovDRH" role="tab" data-toggle="tab">
+									    	<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+									    	Aprovação DRH
+									    </a>
+								    </li>
+								    <li data-atividade="217">
+								    	<a href="#tabInssPagamento" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-money icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Pagamento
+								    	</a>
+								    </li>
+								</ul>
+								
+								<div class="tab-content custom-tab-content">
+									<div class="tab-pane fade active in" id="tabInssAnexos">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="table-responsive">
+													<table tablename="tblInssAnexos" id="tblInssAnexos" class="table table-bordered" nodeletebutton=true noaddbutton=true>
+													    <thead class="fs-display-none">
+													        <tr>
+																<td></td>
+													            <td></td>
+																<td class="tdDeleteRow"></td>
+													        </tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td class="fs-v-align-middle fs-font-bold count" style="width: 1%;"></td>
+																<td>
+																	<div class="row">
+																		<div class="col-sm-8 col-md-8">
+																			<div class="form-group">
+																				<label class="control-label">Anexo</label>
+																				<div class="componentAnexo">
+																					<div class="input-group">
+																						<input type="hidden" id="fdAnexoInss" name="fdAnexoInss"  class="descAnexo" />
+																						<input type="text" id="fnAnexoInss" name="fnAnexoInss" class="form-control inputAnexo input-sm" placeholder="Selecione um arquivo" readonly />
+																					</div>
+																					<div class="icones">
+																						<button type="button" class="btnUpFile btn btn-success btn-sm" data-acao="upload" onclick="anexo(event)" title="Selecionar">
+																							<i class="fluigicon fluigicon-file-upload icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnViewerFile btn btn-info btn-sm" data-acao="viewer" onclick="anexo(event)" title="Visualizar" disabled>
+																							<i class="fluigicon fluigicon-eye-open icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnDownloadFile btn btn-info btn-sm" data-acao="download" onclick="anexo(event)" title="Download" disabled>
+																							<i class="fluigicon fluigicon-download icon-sm"></i>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-sm-4 col-md-4">
+																			<div class="checkbox fs-lg-margin-top">
+																				<label>
+																					<input type="checkbox" name="visivelFinInss" id="visivelFinInss" class="visivelFin">Visível para o financeiro?
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+																<td class="fs-v-align-middle fs-text-center tdDeleteRow" style="width: 1%;">
+																	<div class="lixeira">
+																		<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover" onclick="destroyRowTable(this)"></i>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+										       		</table>
+												</div>
+											</div>
+											<div class="col-md-12 btnAddNewRow" id="btnAddNewRowInss">
+												<button class="btn btn-sm btn-success" title="Novo Anexo" onClick="addNewRowTable('tblInssAnexos', 'fdAnexoInss')">Novo Anexo</button>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabInssAprovGRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="inssRespGrhNome">Responsável</label> 
+													<input type="hidden" id="inssRespGrhMat" name="inssRespGrhMat" />
+													<input type="text" class="form-control" id="inssRespGrhNome" name="inssRespGrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="inssGrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="inssGrhData" name="inssGrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="inssGrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="inssGrhHora" name="inssGrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Decisão GRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGrhINSS" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGrhINSS" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<label class="control-label" for="motivoReprovacaoGrhINSS">Motivo da reprovação </label>	
+												<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoGrhINSS" id="motivoReprovacaoGrhINSS" readonly></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabInssAprovDRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="inssRespDrhNome">Responsável</label> 
+													<input type="hidden" id="inssRespDrhMat" name="inssRespDrhMat" />
+													<input type="text" class="form-control" id="inssRespDrhNome" name="inssRespDrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="inssDrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="inssDrhData" name="inssDrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="inssDrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="inssDrhHora" name="inssDrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Decisão DRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDrhINSS" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDrhINSS" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<label class="control-label" for="motivoReprovacaoDrhINSS">Motivo da reprovação </label>	
+												<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoDrhINSS" id="motivoReprovacaoDrhINSS" readonly></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabInssPagamento">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="inssRespNome">Responsável pelo Pagamento</label> 
+													<input type="hidden" id="inssRespMat" name="inssRespMat" />
+													<input type="text" class="form-control" id="inssRespNome" name="inssRespNome" />
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="inssData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="inssData" name="inssData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="inssHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="inssHora" name="inssHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Pagamento realizado?</label>
+												<div class="radio">		
+													<label>			
+														<input name="inssRealizado" id="inssRealizadoTotal" value="total" type="radio">			
+														<span class="">Pagamento Total</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="inssRealizado" id="inssRealizadoParcial" value="parcial" type="radio"> 			
+														<span class="">Pagamento Parcial</span>		
+													</label> 
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="inssRealizado" id="inssRealizadoNaoReal" value="naoRealizado" type="radio"> 			
+														<span class="">Pagamento Não realizado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="inssMotivo">Motivo </label>	
+													<textarea rows="3" cols="3" class="form-control" name="inssMotivo" id="inssMotivo" readonly></textarea>
+												</div>
+											</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel-group">
+					<div class="panel panel-default" id="panel_AprovarDarfINSS">
+		            	<div class="panel-heading">
+							<h2 class="panel-title">
+							    <a class="collapse-icon up titulo-panel" style="text-decoration: none;">
+								    <span class="flaticon flaticon-check-circle icon-sm"></span>&nbsp;DARF INSS
+								</a>
+							</h2>
+						</div>
+						<div id="collapseAprovDarfINSS">
+							<div class="panel-body">
+								<ul class="nav nav-tabs custom-nav-tabs clearfix" id="darfInssTabs" role="tablist">
+								    <li class="active" data-atividade="88">
+										<a href="#tabDarfInssAnexos" role="tab" data-toggle="tab">
+											<i class="fluigicon fluigicon-file-upload icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+											Anexos
+										</a>
+									</li>
+									<li data-atividade="122">
+								    	<a href="#tabDarfInssAprovGRH" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Aprovação GRH
+								    	</a>
+								    </li>
+								    <li data-atividade="124">
+									    <a href="#tabDarfInssAprovDRH" role="tab" data-toggle="tab">
+									    	<i class="fluigicon fluigicon-checked icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+									    	Aprovação DRH
+									    </a>
+								    </li>
+								    <li data-atividade="225">
+								    	<a href="#tabDarfInssPagamento" role="tab" data-toggle="tab">
+								    		<i class="fluigicon fluigicon-money icon-sm fs-xs-margin-right" aria-hidden="true"></i>
+								    		Pagamento
+								    	</a>
+								    </li>
+								</ul>
+								
+								<div class="tab-content custom-tab-content">
+									<div class="tab-pane fade active in" id="tabDarfInssAnexos">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="table-responsive">
+													<table tablename="tblDarfInssAnexos" id="tblDarfInssAnexos" class="table table-bordered" nodeletebutton=true noaddbutton=true>
+													    <thead class="fs-display-none">
+													        <tr>
+																<td></td>
+													            <td></td>
+																<td class="tdDeleteRow"></td>
+													        </tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td class="fs-v-align-middle fs-font-bold count" style="width: 1%;"></td>
+																<td>
+																	<div class="row">
+																		<div class="col-sm-8 col-md-8">
+																			<div class="form-group">
+																				<label class="control-label">Anexo</label>
+																				<div class="componentAnexo">
+																					<div class="input-group">
+																						<input type="hidden" id="fdAnexoDarfInss" name="fdAnexoDarfInss"  class="descAnexo" />
+																						<input type="text" id="fnAnexoDarfInss" name="fnAnexoDarfInss" class="form-control inputAnexo input-sm" placeholder="Selecione um arquivo" readonly />
+																					</div>
+																					<div class="icones">
+																						<button type="button" class="btnUpFile btn btn-success btn-sm" data-acao="upload" onclick="anexo(event)" title="Selecionar">
+																							<i class="fluigicon fluigicon-file-upload icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnViewerFile btn btn-info btn-sm" data-acao="viewer" onclick="anexo(event)" title="Visualizar" disabled>
+																							<i class="fluigicon fluigicon-eye-open icon-sm"></i>
+																						</button>
+																						<button style="display: none;" type="button" class="btnDownloadFile btn btn-info btn-sm" data-acao="download" onclick="anexo(event)" title="Download" disabled>
+																							<i class="fluigicon fluigicon-download icon-sm"></i>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-sm-4 col-md-4">
+																			<div class="checkbox fs-lg-margin-top">
+																				<label>
+																					<input type="checkbox" name="visivelFinDarfInss" id="visivelFinDarfInss" class="visivelFin">Visível para o financeiro?
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+																<td class="fs-v-align-middle fs-text-center tdDeleteRow" style="width: 1%;">
+																	<div class="lixeira">
+																		<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover" onclick="destroyRowTable(this)"></i>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+										       		</table>
+												</div>
+											</div>
+											<div class="col-md-12 btnAddNewRow" id="btnAddNewRowDarfInss">
+												<button class="btn btn-sm btn-success" title="Novo Anexo" onClick="addNewRowTable('tblDarfInssAnexos', 'fdAnexoDarfInss')">Novo Anexo</button>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabDarfInssAprovGRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="darfInssRespGrhNome">Responsável</label> 
+													<input type="hidden" id="darfInssRespGrhMat" name="darfInssRespGrhMat" />
+													<input type="text" class="form-control" id="darfInssRespGrhNome" name="darfInssRespGrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="darfInssGrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="darfInssGrhData" name="darfInssGrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="darfInssGrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="darfInssGrhHora" name="darfInssGrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Decisão GRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGrhDarfINSS" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoGrhDarfINSS" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<label class="control-label" for="motivoReprovacaoGrhDarfINSS">Motivo da reprovação </label>	
+												<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoGrhDarfINSS" id="motivoReprovacaoGrhDarfINSS" readonly></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabDarfInssAprovDRH">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="darfInssRespDrhNome">Responsável</label> 
+													<input type="hidden" id="darfInssRespDrhMat" name="darfInssRespDrhMat" />
+													<input type="text" class="form-control" id="darfInssRespDrhNome" name="darfInssRespDrhNome" />
+												</div>
+											</div>
+		
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="darfInssDrhData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="darfInssDrhData" name="darfInssDrhData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="darfInssDrhHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="darfInssDrhHora" name="darfInssDrhHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Decisão DRH</label>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDrhDarfINSS" value="aprovado" type="radio">			
+														<span class="">Aprovado</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="decisaoDrhDarfINSS" value="reprovado" type="radio"> 			
+														<span class="">Reprovado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<label class="control-label" for="motivoReprovacaoDrhDarfINSS">Motivo da reprovação </label>	
+												<textarea rows="3" cols="3" class="form-control" name="motivoReprovacaoDrhDarfINSS" id="motivoReprovacaoDrhDarfINSS" readonly></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabDarfInssPagamento">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label" for="darfInssRespNome">Responsável pelo Pagamento</label> 
+													<input type="hidden" id="darfInssRespMat" name="darfInssRespMat" />
+													<input type="text" class="form-control" id="darfInssRespNome" name="darfInssRespNome" />
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="darfInssData">Data</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="darfInssData" name="darfInssData" />
+														<span class="input-group-addon">
+													        <span class="fluigicon fluigicon-calendar"></span>
+													    </span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label" for="darfInssHora">Hora</label> 
+													<div class="input-group">
+														<input type="text" class="form-control" id="darfInssHora" name="darfInssHora" />
+														<span class="input-group-addon">
+												            <span class="fluigicon fluigicon-time"></span>
+												        </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<label class="control-label">Pagamento realizado?</label>
+												<div class="radio">		
+													<label>			
+														<input name="darfInssRealizado" id="darfInssRealizadoTotal" value="total" type="radio">			
+														<span class="">Pagamento Total</span>		
+													</label>
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="darfInssRealizado" id="darfInssRealizadoParcial" value="parcial" type="radio"> 			
+														<span class="">Pagamento Parcial</span>		
+													</label> 
+												</div>
+												<div class="radio">		
+													<label>			
+														<input name="darfInssRealizado" id="darfInssRealizadoNaoReal" value="naoRealizado" type="radio"> 			
+														<span class="">Pagamento Não realizado</span>		
+													</label> 
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="form-group">
+													<label class="control-label" for="darfInssMotivo">Motivo </label>	
+													<textarea rows="3" cols="3" class="form-control" name="darfInssMotivo" id="darfInssMotivo" readonly></textarea>
+												</div>
+											</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<div class="row customBtnSend">
+				<div class="col-md-12 fs-md-margin-bottom">
+					<div class="fs-float-right">
+						<button type="button" class="btn btn-success" onclick="top.$('[data-send]').first().click();">Enviar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

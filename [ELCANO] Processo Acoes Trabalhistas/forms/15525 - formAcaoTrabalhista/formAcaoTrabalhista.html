@@ -1,0 +1,1578 @@
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+
+	<!-- [Custom] -->
+	<link rel="stylesheet" href="css/formAcaoTrabalhista.css">
+	<link rel="stylesheet" href="css/xp.validator.css">
+
+	<script type="text/javascript" src="js/formAcaoTrabalhista.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/xp_utils.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/formAcaoTrabalhistaAttach.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/zoom.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/ActivityView.js" charset="utf-8"></script>
+	<script src="/style-guide/js/fluig-style-guide-richeditor.min.js"></script>
+	
+
+	<style type="text/css">
+		select[readonly] {
+			background: #eee;
+			pointer-events: none;
+			touch-action: none;
+		}
+		body{
+			overflow-x: hidden;
+		}
+	</style>
+	
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<!-- [Inicio] campos de controle -->
+			<input type="hidden" id="solicitanteMatricula" name="solicitanteMatricula" value="" />
+			<input type="hidden" id="numSolicitacao" name="numSolicitacao" value="" />
+			<input type="hidden" id="atividadeAnterior" name="atividadeAnterior" value="" />
+			<input type="hidden" id="atividadeCorrente" name="atividadeCorrente" value="" />
+			<input type="hidden" id="atividadeProxima" name="atividadeProxima" value="" />
+			<input type="hidden" id="urlAmbiente" name="urlAmbiente" value="" />
+			<input type="hidden" id="modoAdmin" name="modoAdmin" value="" />
+			 
+			<!-- [Fim] campos de controle -->
+			<div class="page-header">
+				<h2><span class="fluigicon fluigicon-sticky-note fluigicon-md"></span>
+					&nbsp;Ações Trabalhistas
+				</h2>
+			</div>
+			
+			<div class="col-md-12">
+				<div class="row">
+					<!-- <div class="panel-group" id="accordion"> -->
+					<div class="panel-group fs-no-margin-bottom" id="accordion">
+						<!-- [Atividade Solicitação] -->
+							<div class="panel panel-default mb-3" id="panel_DadosSolicitante">
+								<div class="panel-heading fs-no-padding fs-lg-padding-right">
+									<h2 class="panel-title">
+										<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+											href="#collapseDadosSolicitante">
+											<span class="fluigicon fluigicon-user fluigicon-sm"></span>
+											&nbsp;Dados do Solicitante
+										</a>
+									</h2>
+								</div>
+								<div id="collapseDadosSolicitante" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-2">
+												<div class="form-group">
+													<label id="lblDataCriacao" class="control-label required"  
+														for="dataCriacao">Data Criação</label>
+													<div class="input-group">
+														<input type="text" class="form-control" id="dataCriacao" name="dataCriacao"
+															readonly />
+														<span class="input-group-addon">
+															<span class="fluigicon fluigicon-calendar"></span>
+														</span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-4">
+												<div class="form-group">
+													<label id="lblSolicitante" class="control-label required" atividades="0,8,11"
+														for="solicitanteNome">Solicitante</label>
+													<div class="input-group">
+														<input type="text" class="form-control" id="solicitanteNome"
+															name="solicitanteNome" readonly />
+														<span class="input-group-addon">
+															<span class="fluigicon fluigicon-user"></span>
+														</span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label" for="solicitanteEmail">Email</label>
+													<div class="input-group">
+														<input type="text" class="form-control" id="solicitanteEmail"
+															name="solicitanteEmail" readonly />
+														<span class="input-group-addon">@</span>
+													</div>
+												</div>
+											</div> 
+										</div> <!-- row -->
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="control-label" for="solicitanteTelefone">Telefone</label>
+													<div class="input-group">
+														<input type="text" class="form-control" id="solicitanteTelefone"
+															name="solicitanteTelefone" readonly />
+														<span class="input-group-addon">
+															<span class="fluigicon fluigicon-phone"></span>
+														</span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="control-label" for="solicitanteDepartamento">Departamento</label>
+													<div class="input-group">
+														<input type="text" class="form-control" id="solicitanteDepartamento"
+															name="solicitanteDepartamento" readonly />
+														<span class="input-group-addon">
+															<span class="fluigicon fluigicon-company"></span>
+														</span>
+													</div>
+												</div>
+											</div> 
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label required" atividades="0,8,11"
+														for="zoomColigada">Coligada</label>
+													<input type="hidden" id="codColigada" name="codColigada" value="" />
+													<input type="zoom" class="form-control" id="zoomColigada" name="zoomColigada"
+														data-zoom="{
+																'displayKey': 'NOMEFANTASIA',
+																'datasetId': 'dsColigadas',
+																'filterValues': '',
+																'fields': [
+																   {
+																	   'field': 'NOMEFANTASIA',
+																	   'label': 'Coligada',	
+																	   'standard': 'true',					       
+																	   'search': 'true'
+																	}
+																 ]
+															   }" value="ELCANO" readonly />
+												</div>
+											</div> 
+										</div> <!-- row -->
+									</div> <!-- panel body -->
+								</div>
+							</div>
+							
+							
+							<!-- [Dados Ex Funcionário]  -->
+							<div class="panel panel-default mb-3" id="panel_ExFuncionario">
+								<div class="panel-heading fs-no-padding fs-lg-padding-right">
+									<h2 class="panel-title">
+										<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+											href="#collapseExFuncionario">
+											<span class="fluigicon fluigicon-removeuser icon-sm"></span>
+											&nbsp;Dados do Ex Funcionário
+										</a>
+									</h2>
+								</div>
+								<div id="collapseExFuncionario" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="control-label required" for="zoomExFuncionario">CPF do Ex Funcionário</label>
+													<input type="zoom" class="form-control" id="zoomExFuncionario" name="zoomExFuncionario" 
+													data-zoom="{
+															'displayKey': 'CPF_NOME',
+															'datasetId': 'dsFuncionarioProjElcano',
+															'filterValues': '',
+															'fields': [
+																{
+																	'field': 'CPF',
+																	'label': 'CPF',	
+																	'standard': 'true',					       
+																	'search': 'true'
+																 },
+																 {
+																   'field': 'NOME',
+																   'label': 'Ex-Colaborador',	
+																   'standard': 'true',					       
+																   'search': 'false'
+																},
+																{
+																	'field': 'CARTIDENTIDADE',
+																	'label': 'IDENTIDADE',	
+																	'standard': 'false',					       
+																	'search': 'false',
+																	'visible':'false'
+																 },
+																{
+																	'field': 'CARTEIRATRAB',
+																	'label': 'CTPS',	
+																	'standard': 'false',					       
+																	'search': 'false',
+																	'visible':'false'
+																 },
+																{
+																	'field': 'SERIECARTTRAB',
+																	'label': 'SERIE CTPS',	
+																	'standard': 'false',					       
+																	'search': 'false',
+																	'visible':'false'
+																 }
+															 ]
+															  }" value="" />
+												</div>
+												<input type="hidden" name="cpfExFuncionario" id="cpfExFuncionario">
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="control-label required" for="nomeExFuncionario">Nome </label>
+													<input type="text" class="form-control" id="nomeExFuncionario" name="nomeExFuncionario" readonly />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="control-label required" for="rgExFuncionario">Identidade </label>
+													<input type="text" class="form-control" id="rgExFuncionario" name="rgExFuncionario" readonly />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label id="lblctps" class="control-label required" for="ctps">Nº CTPS </label>
+													<input type="text" class="form-control" id="ctps" name="ctps" readonly />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label id="lblserie" class="control-label required" for="serie">Série CTPS </label>
+													<input type="text" class="form-control" id="serie" name="serie" readonly />
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+								</div>
+							 <!-- Fim Dados Ex Funcionário  -->
+
+							<!-- [Documentações Anexos]  -->
+							<div class="panel panel-default mb-3" id="panel_documentacoesAnexos">
+								<div class="panel-heading fs-no-padding fs-lg-padding-right">
+									<h2 class="panel-title">
+										<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+											href="#collapsedocumentacoesAnexos">
+											<span class="fluigicon fluigicon-paperclip icon-sm"></span>
+											&nbsp;Anexo de Documentações
+										</a>
+									</h2>
+								</div>
+								<div id="collapsedocumentacoesAnexos" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<div class="row" id="div_anexos_rg">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoIdentidade">Identidade <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoIdentidade" name="anexoIdentidade" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoIdentidade" id="nomeArquivoIdentidade" name="nomeArquivoIdentidade"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoIdentidade" name="btnAnexoIdentidade" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Identidade', false);" type="submit" readonly>
+											    		<input id="btnDownloadIdentidade" name="btnDownloadIdentidade" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Identidade', false);" type="submit" >
+											    		<input id="btnViewerIdentidade" name="btnViewerIdentidade" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Identidade', false);" type="submit" >
+														<input id="btnLimparIdentidade" name="btnLimparIdentidade" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Identidade', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" id="switchIdentidade">
+													<label class="fs-display-block control-label" for="switchEnviarRg">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarRg" name="switchEnviarRg" data-toggle="toggle" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarRgHide" name="switchEnviarRgHide"/>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_anexos_ctps">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoCTPS">Carteira de Trabalho <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoCTPS" name="anexoCTPS" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoCTPS" id="nomeArquivoCTPS" name="nomeArquivoCTPS"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoCTPS" name="btnAnexoCTPS" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'CTPS', false);" type="submit" readonly>
+											    		<input id="btnDownloadCTPS" name="btnDownloadCTPS" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'CTPS', false);" type="submit" >
+											    		<input id="btnViewerCTPS" name="btnViewerCTPS" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'CTPS', false);" type="submit" >
+														<input id="btnLimparCTPS" name="btnLimparCTPS" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'CTPS', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" id="switchCTPS">
+													<label class="fs-display-block control-label" for="switchEnviarCtps">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarCtps" name="switchEnviarCtps" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarCtpsHide" name="switchEnviarCtpsHide"/>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_anexos_contrato">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoContrato">Contrato de Trabalho <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoContrato" name="anexoContrato" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoContrato" id="nomeArquivoContrato" name="nomeArquivoContrato"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoContrato" name="btnAnexoContrato" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Contrato', false);" type="submit" readonly>
+											    		<input id="btnDownloadContrato" name="btnDownloadContrato" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Contrato', false);" type="submit" >
+											    		<input id="btnViewerContrato" name="btnViewerContrato" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Contrato', false);" type="submit" >
+														<input id="btnLimparContrato" name="btnLimparContrato" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Contrato', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" id="switchContrato">
+													<label class="fs-display-block control-label" for="switchEnviarContrato">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarContrato" name="switchEnviarContrato" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarContratoHide" name="switchEnviarContratoHide"/>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_anexos_comprovante_residencia">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoComprovante">Comprovante de Residência <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoComprovante" name="anexoComprovante" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoComprovante" id="nomeArquivoComprovante" name="nomeArquivoComprovante"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoComprovante" name="btnAnexoComprovante" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Comprovante', false);" type="submit" readonly>
+											    		<input id="btnDownloadComprovante" name="btnDownloadComprovante" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Comprovante', false);" type="submit" >
+											    		<input id="btnViewerComprovante" name="btnViewerComprovante" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Comprovante', false);" type="submit" >
+														<input id="btnLimparComprovante" name="btnLimparComprovante" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Comprovante', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" id="switchComprovante">
+													<label class="fs-display-block control-label" for="switchEnviarComprovanteRes">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarComprovanteRes" name="switchEnviarComprovanteRes" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarComprovanteResHide" name="switchEnviarComprovanteResHide"/>
+												</div>
+											</div>
+										</div>										
+										<div class="row" id="div_anexos_ficha_financeira">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoFicha">Ficha Financeira <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoFicha" name="anexoFicha" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoFicha" id="nomeArquivoFicha" name="nomeArquivoFicha"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoFicha" name="btnAnexoFicha" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Ficha', false);" type="submit" readonly>
+											    		<input id="btnDownloadFicha" name="btnDownloadFicha" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Ficha', false);" type="submit" >
+											    		<input id="btnViewerFicha" name="btnViewerFicha" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Ficha', false);" type="submit" >
+														<input id="btnLimparFicha" name="btnLimparFicha" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Ficha', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" id="switchFicha">
+													<label class="fs-display-block control-label" for="switchEnviarFichaFin">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarFichaFin" name="switchEnviarFichaFin" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarFichaFinHide" name="switchEnviarFichaFinHide"/>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_anexos_ficha_registro">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoRegistro">Ficha de Registro <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoRegistro" name="anexoRegistro" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoRegistro" id="nomeArquivoRegistro" name="nomeArquivoRegistro"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoRegistro" name="btnAnexoRegistro" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Registro', false);" type="submit" readonly>
+											    		<input id="btnDownloadRegistro" name="btnDownloadRegistro" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Registro', false);" type="submit" >
+											    		<input id="btnViewerRegistro" name="btnViewerRegistro" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Registro', false);" type="submit" >
+														<input id="btnLimparRegistro" name="btnLimparRegistro" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Registro', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" id="switchRegistro">
+													<label class="fs-display-block control-label" for="switchEnviarFichaRegistro">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarFichaRegistro" name="switchEnviarFichaRegistro" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarFichaRegistroHide" name="switchEnviarFichaRegistroHide"/>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_anexos_notificacao">
+											<div class="form-group">
+												<div class="col-md-6">
+												    <div class="form-group">
+													    <label class="control-label" for="anexoNotificacao">Anexo da Notificação <span class="fs-color-danger">*</span></label>
+													    <div class="input-group">
+															<span class="input-group-addon">
+													            <span class="fluigicon fluigicon-paperclip"></span>
+													        </span>
+													        <input type="text" id="anexoNotificacao" name="anexoNotificacao" class="form-control" placeholder="Selecione um arquivo" readonly />
+															<input type="hidden" class="nomeArquivoNotificacao" id="nomeArquivoNotificacao" name="nomeArquivoNotificacao"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group" style="margin-top: 25px;">
+											    		<input id="btnAnexoNotificacao" name="btnAnexoNotificacao" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Notificacao', false);" type="submit" readonly>
+											    		<input id="btnDownloadNotificacao" name="btnDownloadNotificacao" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Notificacao', false);" type="submit" >
+											    		<input id="btnViewerNotificacao" name="btnViewerNotificacao" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Notificacao', false);" type="submit" >
+														<input id="btnLimparNotificacao" name="btnLimparNotificacao" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Notificacao', false);" type="submit" style="display: none">
+													</div>
+												</div>
+											</div>
+											
+											
+											<div class="col-md-4">
+												<div class="form-group" id="switchNotificacao">
+													<label class="fs-display-block control-label" for="switchEnviarNotificacao">Enviar este doc ao escritório?</label>
+													<input class="checkbox" type="checkbox" id="switchEnviarNotificacao" name="switchEnviarNotificacao" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+													<input type="hidden" id="switchEnviarNotificacaoHide" name="switchEnviarNotificacaoHide"/>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_citacao" style="margin-top: -10px;">
+											<div class="form-group">
+												<div class="form-group">
+													<div class="col-md-6">
+													    <div class="form-group">
+														    <label class="control-label" for="anexoCitacao">Anexo da Citação <span class="fs-color-danger">*</span></label>
+														    <div class="input-group">
+																<span class="input-group-addon">
+														            <span class="fluigicon fluigicon-paperclip"></span>
+														        </span>
+														        <input type="text" id="anexoCitacao" name="anexoCitacao" class="form-control" placeholder="Selecione um arquivo" readonly />
+																<input type="hidden" class="nomeArquivoCitacao" id="nomeArquivoCitacao" name="nomeArquivoCitacao"/>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-1">
+														<div class="form-group" style="margin-top: 25px;">
+												    		<input id="btnAnexoCitacao" name="btnAnexoCitacao" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Citacao', false);" type="submit" readonly>
+												    		<input id="btnDownloadCitacao" name="btnDownloadCitacao" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Citacao', false);" type="submit" >
+												    		<input id="btnViewerCitacao" name="btnViewerCitacao" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Citacao', false);" type="submit" >
+															<input id="btnLimparCitacao" name="btnLimparCitacao" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Citacao', false);" type="submit" style="display: none">
+														</div>
+													</div>
+												</div>
+												
+												
+												<div class="col-md-4">
+													<div class="form-group" id="switchCitacao">
+														<label class="fs-display-block control-label" for="switchEnviarCitacao">Enviar este doc ao escritório?</label>
+														<input class="checkbox" type="checkbox" id="switchEnviarCitacao" name="switchEnviarCitacao" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+														<input type="hidden" id="switchEnviarCitacaoHide" name="switchEnviarCitacaoHide"/>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row" id="div_info_processo">
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label required" atividades="0,8,11" for="numeroProcesso">Número do Processo </label>
+													<input type="text" class="form-control" id="numeroProcesso" name="numeroProcesso" /> 
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label required" atividades="0,8,11" for="representanteReclamente">Representante do Reclamente</label>
+													<input type="text" class="form-control" id="representanteReclamente" name="representanteReclamente" /> 
+												</div>
+											</div>
+										</div>
+										
+										
+										<div class="row">
+						            		<div class="col-md-12">
+						            			<h5><span class="fluigicon fluigicon-paperclip fluigicon-xs" style="color: #cf2227"></span>&nbsp;Anexos adicionais</h5>
+												<table class="table table-bordered" tablename="tabelaAnexos" id="tabelaAnexos" noaddbutton="true" nodeletebutton="true">
+													<thead style="display: none">
+														<tr>
+															<td></td>
+															<td></td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="fs-v-align-middle fs-text-center" style="width: 1%;">
+																<div class="fs-font-bold fs-md-margin-bottom"></div>
+																<div class="lixeira3">
+																	<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover"  onclick="removerAnexo(this)"></i>
+																</div>
+															</td>
+															
+															<td>
+																<div class="row">
+																	<div class="col-md-6">
+																	    <div class="form-group">
+																		    <label class="control-label" for="anexoDocumento">Documento</label>
+																	        <div class="input-group">
+																				<span class="input-group-addon">
+																		            <span class="fluigicon fluigicon-paperclip"></span>
+																		        </span>
+																	        	<input type="text" id="anexoDocumento" name="anexoDocumento" class="form-control anexo" placeholder="Selecione um arquivo" readonly="readonly" >
+																				<input type="hidden" class="nomeArquivoDocumento" id="nomeArquivoDocumento" name="nomeArquivoDocumento"/>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-2">
+																		<div class="form-group" style="margin-top: 35px;">
+																			<input id="btnAnexoDocumento" name="btnAnexoDocumento" class="button-anexo anexoDesktop" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Documento', true);" type="submit" readonly>
+																	    	<input id="btnDownloadDocumento" name="btnDownloadDocumento" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Documento', true);" type="submit">
+																	    	<input id="btnViewerDocumento" name="btnViewerDocumento" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Documento', true);" type="submit">
+																	    	<input id="btnLimparDocumento" name="btnLimparDocumento" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Documento', true);" type="submit" style="display: none">
+																		</div>
+																	</div>
+																	<div class="col-md-3" id="div_switchEnviarAdicional">
+																		<div class="form-group">
+																			<label class="fs-display-block control-label" for="switchEnviarAdicional">Enviar este doc ao escritório?</label>
+																			<input class="checkbox" type="checkbox" id="switchEnviarAdicional" name="switchEnviarAdicional" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+																			<input type="hidden" class="hiddenSwitchEnviarAdicional" id="hiddenSwitchEnviarAdicional" name="hiddenSwitchEnviarAdicional"/>
+																			<input type="hidden" id="switchEnviarAdicionalHide" name="switchEnviarAdicionalHide"/>
+																		</div>
+																	</div>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												<br>
+												<div class="col-md-12 btnAddNewDoc" id="btnAddAdicional">
+													<button class="btn btn-primary btn-sm" title="Adiciona Novo Documento" onClick="adicionarAnexo();"><i class="flaticon flaticon-paperclip icon-sm" aria-hidden="true"></i> Adicionar Anexo</button>&nbsp;
+												</div>
+												<br><br>
+											</div>
+					            		</div>
+									</div>
+								</div>
+							</div>	
+					<!-- [Análise do Diretor]  -->
+					<div class="panel panel-default mb-3" id="panel_analiseDiretor">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseanaliseDiretor">
+									&nbsp; Análise do Diretor
+								</a>
+							</h2>
+						</div>
+						<div id="collapseanaliseDiretor" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label" atividades="0,4,15" for="descricaoAnaliseDiretor">Descrição da
+												Análise</label>
+											<textarea class="form-control" name="descricaoAnaliseDiretor" id="descricaoAnaliseDiretor"
+												style="resize: none;" rows="3"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- [Elaboração de Subsidios]  -->
+					<div class="panel panel-default mb-3" id="panel_elaboracaoSubsidios">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseelaboracaoSubsidios">
+									&nbsp; Elaboração de Subsídios
+								</a>
+							</h2>
+						</div>
+						<div id="collapseelaboracaoSubsidios" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-7">
+										<div class="form-group">
+											<label id="lblelaboradorSubsidios" class="control-label required" atividades="0,8,11,25"
+												for="elaboradorSubsidios">Elaborador</label>
+											<input type="text" class="form-control" id="elaboradorSubsidios" name="elaboradorSubsidios" readonly/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label required" for="dataSubsidios">Data</label>
+											<input type="date" class="form-control" id="dataSubsidios" name="dataSubsidios" readonly/>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label required" for="horaSubsidios">Hora</label>
+											<input type="time" class="form-control" id="horaSubsidios" name="horaSubsidios" readonly/>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-5" style="margin-top: 15px;">
+										    <div class="form-group">
+											    <label class="control-label" for="anexoSubsidios">Anexo dos Subsídios <span class="fs-color-danger">*</span></label>
+											    <div class="input-group">
+													<span class="input-group-addon">
+											            <span class="fluigicon fluigicon-paperclip"></span>
+											        </span>
+											        <input type="text" id="anexoSubsidios" name="anexoSubsidios" class="form-control" placeholder="Selecione um arquivo" readonly />
+													<input type="hidden" class="nomeArquivoSubsidios" id="nomeArquivoSubsidios" name="nomeArquivoSubsidios"/>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2" style="margin-top: 15px;">
+											<div class="form-group" style="margin-top: 25px;">
+									    		<input id="btnAnexoSubsidios" name="btnAnexoSubsidios" class="button-anexo" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Subsidios', false);" type="submit" readonly>
+									    		<input id="btnDownloadSubsidios" name="btnDownloadSubsidios" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Subsidios', false);" type="submit" >
+									    		<input id="btnViewerSubsidios" name="btnViewerSubsidios" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Subsidios', false);" type="submit" >
+												<input id="btnLimparSubsidios" name="btnLimparSubsidios" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Subsidios', false);" type="submit" style="display: none">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3" id="div_switchAlterSubsidio">
+										<div class="form-group">
+											<label class="fs-display-block control-label" for="switchAlterSubsidio">Alterar este
+												Documento?</label>
+											<input class="checkbox" type="checkbox" id="switchAlterSubsidio" name="switchAlterSubsidio"
+												data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger"
+												autofocus="autofocus">
+										</div>
+									</div>
+									<div class="col-md-2 send-escritorio" id="div_enviarSubsidio">
+										<div class="form-group">
+											<label class="fs-display-block control-label" for="switchEnviarSubsidio">Enviar este doc ao escritório?</label>
+											<input class="checkbox" type="checkbox" id="switchEnviarSubsidio" name="switchEnviarSubsidio"
+												data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger"
+												autofocus="autofocus">
+											<input type="hidden" id="switchEnviarSubsidioHide" name="switchEnviarSubsidioHide"/>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+					            	<div class="col-md-12">
+					            		<h5><span class="fluigicon fluigicon-paperclip fluigicon-xs" style="color: #cf2227"></span>&nbsp;Anexos dos Apêndices</h5>
+										<table class="table table-bordered" tablename="tabelaApendices" id="tabelaApendices" noaddbutton="true" nodeletebutton="true">
+											<thead style="display: none">
+												<tr>
+													<td></td>
+													<td></td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="fs-v-align-middle fs-text-center" style="width: 1%;">
+														<div class="fs-font-bold fs-md-margin-bottom countDoc"></div>
+														<div class="lixeira5">
+															<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover"  onclick="removerApendice(this)"></i>
+														</div>
+													</td>
+													
+													<td>
+														<div class="col-md-4" style="padding-top: 10px;">
+														    <div class="form-group" style="margin-right: -38px;">
+															    <label class="control-label" for="anexoApendice">Apêndice</label>
+														        <div class="input-group">
+																	<span class="input-group-addon">
+															            <span class="fluigicon fluigicon-paperclip"></span>
+															        </span>
+														        	<input type="text" id="anexoApendice" name="anexoApendice" class="form-control anexo" placeholder="Selecione um arquivo" readonly="readonly" >
+																	<input type="hidden" class="nomeArquivoApendice" id="nomeArquivoApendice" name="nomeArquivoApendice"/>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-2" style="padding-top: 10px;margin-left: 38px;">
+															<div class="form-group" style="margin-top: 30px;">
+																<input id="btnAnexoApendice" name="btnAnexoApendice" class="button-anexo anexoDesktop" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Apendice', true);" type="submit" readonly>
+														    	<input id="btnDownloadApendice" name="btnDownloadApendice" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Apendice', true);" type="submit">
+														    	<input id="btnViewerApendice" name="btnViewerApendice" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Apendice', true);" type="submit">
+														    	<input id="btnLimparApendice" name="btnLimparApendice" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Apendice', true);" type="submit" style="display: none">
+															</div>
+														</div>
+														<div class="col-md-2" style="padding-left: 55px;">
+															<div class="form-group" id="div_switchApendice" style="padding-top: 12px;">
+																<label class="fs-display-block control-label" for="switchAlterarApendice">Alterar este Documento?</label>
+																<input class="checkbox" type="checkbox" id="switchAlterarApendice" name="switchAlterarApendice" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+															</div>
+														</div>
+														<div class="col-md-3" id="div_switchEnviarApendice" style="padding-left: 160px;">
+															<div class="form-group">
+																<label class="fs-display-block control-label" for="switchEnviarApendice">Enviar este doc ao escritório?</label>
+																<input class="checkbox" type="checkbox" id="switchEnviarApendice" name="switchEnviarApendice" data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger" autofocus="autofocus">
+																<input type="hidden" class="hiddenSwitchApendice" id="hiddenSwitchApendice" name="hiddenSwitchApendice"/>
+																<input type="hidden" id="switchEnviarApendiceHide" name="switchEnviarApendiceHide"/>
+															</div>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<br>
+										<div class="col-md-12 btnAddNewDoc" id="buttonAddApendice">
+											<button class="btn btn-primary btn-sm" title="Adiciona Novo Documento" onClick="adicionarApendice();"><i class="flaticon flaticon-paperclip icon-sm" aria-hidden="true"></i> Adicionar Anexo</button>&nbsp;
+										</div>
+										<br><br>
+									</div>
+					           	</div>
+					         </div>
+					      </div>
+					    </div>
+					     
+								
+					<!-- [ Análise de Subsídio - DRH ]  -->
+					<div class="panel panel-default mb-3" id="panel_analiseSubsidioDRH">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseanaliseSubsidioDRH">
+									&nbsp; Análise de Subsídio - DRH
+								</a>
+							</h2>
+						</div>
+						<div id="collapseanaliseSubsidioDRH" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-7">
+										<div class="form-group">
+											<label id="lbldiretor" class="control-label required" atividades="0,8,11"
+												for="diretor">Diretor</label>
+											<input type="text" class="form-control" id="diretor" name="diretor" readonly />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label required" for="dataAnaliseSubsidioDRH">Data</label>
+											<input type="date" class="form-control" id="dataAnaliseSubsidioDRH" name="dataAnaliseSubsidioDRH" readonly/>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label required" for="horaAnaliseSubsidioDRH">Hora</label>
+											<input type="time" class="form-control" id="horaAnaliseSubsidioDRH" name="horaAnaliseSubsidioDRH" readonly/>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-2">
+										<label class="control-label required" for="decisaoDRH">
+											Decisão
+										</label>
+										<div class="radio">
+											<label>
+												<input id="decisaoDRH" name="decisaoDRH" value="aprovado"
+													type="radio" onclick="alterDecDecisaoDRH(this, 'aprovado')">
+												<span class="">Aprovado</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input id="decisaoDRH" name="decisaoDRH" value="ajuste"
+													type="radio" onclick="alterDecDecisaoDRH(this, 'ajuste')">
+												<span class="">Solicitar Ajuste</span>
+											</label>
+										</div>
+										<input type="hidden" id="decDecisaoDRH" name="decDecisaoDRH" value="" />
+									</div>
+									<div class="col-md-10">
+										<div class="form-group">
+											<label class="control-label" atividades="0,4,15" for="justificativaDRH">
+												Justificativa
+											</label>
+											<textarea class="form-control" name="justificativaDRH" id="justificativaDRH"
+												style="resize: none;" rows="3">
+											</textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- [ Análise de Subsídio - Jurídico ]  -->
+					<div class="panel panel-default mb-3" id="panel_analiseSubsidioJuridico">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseanaliseSubsidioJuridico">
+									&nbsp; Análise de Subsídio - Jurídico
+								</a>
+							</h2>
+						</div>
+						<div id="collapseanaliseSubsidioJuridico" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-7">
+										<div class="form-group">
+											<label id="lbljuridico" class="control-label" for="juridico">Jurídico</label>
+											<input type="text" class="form-control" id="juridico" name="juridico" readonly/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label required" for="dataAnaliseSubsidioJuridico">Data</label>
+											<input type="date" class="form-control" id="dataAnaliseSubsidioJuridico" name="dataAnaliseSubsidioJuridico" readonly/>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label required" for="horaAnaliseSubsidioJuridico">Hora</label>
+											<input type="time" class="form-control" id="horaAnaliseSubsidioJuridico" name="horaAnaliseSubsidioJuridico" readonly/>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-2">
+										<label class="control-label required" for="decisaoJuridico">
+											Decisão
+										</label>
+										<div class="radio">
+											<label>
+												<input id="decisaoJuridico" name="decisaoJuridico" value="aprovado"
+													type="radio">
+												<span class="">Aprovado</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input id="decisaoJuridico" name="decisaoJuridico" value="ajuste"
+													type="radio">
+												<span class="">Solicitar Ajuste</span>
+											</label>
+										</div>
+										<input type="hidden" id="decDecisaoJuridico" name="decDecisaoJuridico" value="" />
+									</div>
+									<div class="col-md-10">
+										<div class="form-group">
+											<label class="control-label" atividades="0,4,15" for="justificativaJuridico">
+												Justificativa
+											</label>
+											<textarea class="form-control" name="justificativaJuridico" id="justificativaJuridico"
+												style="resize: none;" rows="3">
+											</textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- [ Escritório de Advocacia ]  -->
+					<div class="panel panel-default mb-3" id="panel_EscritorioAdvocacia">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseEscritorioAdvocacia">
+									&nbsp; Escritório de Advocacia
+								</a>
+							</h2>
+						</div>
+						<div id="collapseEscritorioAdvocacia" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label required" for="emailEscritrioAdvocacia">
+												Corpo do e-mail a ser enviado ao escritório
+											</label>
+											<textarea class="form-control" name="emailEscritrioAdvocacia" id="emailEscritrioAdvocacia"
+												style="resize: none;" rows="2" readonly>
+											</textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row" id="analisar_decisao_escritorio" style="margin-top: 30px;">
+									<div class="col-md-3">
+										<label class="control-label required" for="decisaoEscritorio">
+											Decisão do Escritório
+										</label>
+										<div class="radio">
+											<label>
+												<input id="decisaoEscritorio" name="decisaoEscritorio" value="aprovado"
+													type="radio">
+												<span class="">Não Solicitar mais informações</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input id="decisaoEscritorio" name="decisaoEscritorio" value="maisInformacoes"
+													type="radio">
+												<span class="">Solicitar mais informações</span>
+											</label>
+										</div>
+										<input type="hidden" id="decDecisaoEscritorio" name="decDecisaoEscritorio" value="" />
+									</div>
+									<div class="col-md-2">
+										<label class="control-label required" for="passarPeloRH">
+											Passar pelo RH ?
+										</label>
+										<div class="radio">
+											<label>
+												<input id="passarPeloRH" name="passarPeloRH" value="sim"
+													type="radio">
+												<span class="">Sim</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input id="passarPeloRH" name="passarPeloRH" value="nao"
+													type="radio">
+												<span class="">Não</span>
+											</label>
+										</div>
+										<input type="hidden" id="decPassarPeloRH" name="decPassarPeloRH" value="" />
+									</div>
+									<div class="col-md-5" id="divAnexarContestacao">
+										<div class="form-group">
+										    <label class="control-label required" for="anexoContestacao">Anexar Contestação</label>
+									        <div class="input-group">
+												<span class="input-group-addon">
+										            <span class="fluigicon fluigicon-paperclip"></span>
+										        </span>
+									        	<input type="text" id="anexoContestacao" name="anexoContestacao" class="form-control anexo" placeholder="Selecione um arquivo" readonly="readonly" >
+												<input type="hidden" class="nomeArquivoContestacao" id="nomeArquivoContestacao" name="nomeArquivoContestacao"/>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-2" id="btnAnexos">
+										<div class="form-group" style="margin-top: 30px;">
+											<input id="btnAnexoContestacao" name="btnAnexoContestacao" class="button-anexo anexoDesktop" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Contestacao', false);" type="submit" readonly>
+									    	<input id="btnDownloadContestacao" name="btnDownloadContestacao" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Contestacao', false);" type="submit">
+									    	<input id="btnViewerContestacao" name="btnViewerContestacao" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Contestacao', false);" type="submit">
+									    	<input id="btnLimparContestacao" name="btnLimparContestacao" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Contestacao', false);" type="submit" style="display: none">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- [ Demandas do Processo ]  -->
+					<div class="panel panel-default mb-3" id="panel_demandasProcesso">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapsedemandasProcesso">
+									&nbsp; Demandas do Processo
+								</a>
+							</h2>
+						</div>
+						<div id="collapsedemandasProcesso" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-3">
+										<label class="control-label required" for="novaDemandas">
+											Há novas demandas ?
+										</label>
+										<div class="radio">
+											<label>
+												<input id="novaDemandas" name="novaDemandas" value="sim" type="radio">
+												<span class="">Sim</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input id="novaDemandas" name="novaDemandas" value="nao" type="radio">
+												<span class="">Não</span>
+											</label>
+										</div>
+										<input type="hidden" id="decNovaDemandas" name="decNovaDemandas" value="" />
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label class="control-label required" for="novasDemandas">
+												Descrição de novas demandas
+											</label>
+											<textarea class="form-control" name="novasDemandas" id="novasDemandas" style="resize: none;"
+												rows="3" readonly></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<table class="table" tablename="tabelaDemandasProcesso" id="tabelaDemandasProcesso"
+											noaddbutton="true" nodeletebutton="true">
+											<thead>
+												<tr>
+													<td style="padding-top:0px;"></td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="fs-v-align-middle fs-text-center" style="width: 1%;">
+														<div class="fs-font-bold fs-md-margin-bottom countDoc"></div>
+														<div class="lixeira6">
+															<i class="fluigicon fluigicon-trash icon-md fs-xs-padding fs-cursor-pointer fs-color-danger" title="Remover"  onclick="removerDemanda(this)"></i>
+														</div>
+													</td>
+													<td>
+														<div class="col-md-5">
+															<div class="form-group">
+																<label id="lblrepresentanteReclamente" class="control-label" for="descricaoDemandasProcesso">Descrição</label>
+																<input type="text" class="form-control" id="descricaoDemandasProcesso" name="descricaoDemandasProcesso" readonly/>
+															</div>
+														</div>
+														
+														<div class="col-md-5">
+															<div class="form-group">
+															    <label class="control-label" for="anexoDemanda">Anexo do Documento</label>
+														        <div class="input-group">
+																	<span class="input-group-addon">
+															            <span class="fluigicon fluigicon-paperclip"></span>
+															        </span>
+														        	<input type="text" id="anexoDemanda" name="anexoDemanda" class="form-control anexo" placeholder="Selecione um arquivo" readonly="readonly" >
+																	<input type="hidden" class="nomeArquivoDemanda" id="nomeArquivoDemanda" name="nomeArquivoDemanda"/>
+																	<input type="hidden" id="anexouAtividade" name="anexouAtividade"/>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-2">
+															<div class="form-group" style="margin-top: 30px;">
+																<input id="btnAnexoDemanda" name="btnAnexoDemanda" class="button-anexo anexoDesktop" value="" title="Clique aqui para selecionar um arquivo" onclick="showCameraCustom(this.id, 'Demanda', true);" type="submit" readonly>
+														    	<input id="btnDownloadDemanda" name="btnDownloadDemanda" class="button-download" value="" title="Download do Arquivo" onclick="downloadAnexo(this.id, 'Demanda', true);" type="submit">
+														    	<input id="btnViewerDemanda" name="btnViewerDemanda" class="button-viewer" value="" title="Visualizar Arquivo" onclick="viewerAnexo(this.id, 'Demanda', true);" type="submit">
+														    	<input id="btnLimparDemanda" name="btnLimparDemanda" class="button-clean" value="" title="Remover Arquivo" onclick="cleanAnexo(this.id, 'Demanda', true);" type="submit" style="display: none">
+															</div>
+														</div>
+														
+														
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="col-md-12" style="padding-left: 0px" id="addAnexoNovasDemandas">
+											<input type="button" id="btnDemandasProcesso" onClick="adicionarDemanda();"
+												value="Novo Anexo" class="btn btn-primary">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- [ Testemunhas ]  -->
+					<div class="panel panel-default mb-3" id="panel_testemunhas">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapsetestemunhas">
+									&nbsp; Testemunhas
+								</a>
+							</h2>
+						</div>
+						<div id="collapsetestemunhas" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="fs-display-block control-label" for="switchNomearTestemunhas">
+												Nomear Testemunhas ?
+											</label>
+											<input class="checkbox" type="checkbox" id="switchNomearTestemunhas" name="switchNomearTestemunhas"
+												data-on-text="Sim" data-off-text="Não" data-on-color="success" data-off-color="danger"
+												autofocus="autofocus">
+										</div>
+									</div>
+									<input type="hidden" name="nomearTestemunhas" id="nomearTestemunhas">
+								</div>
+								<hr>
+								<div id="containner-testemunha" style="padding-top: 20px;">
+									<div class="row">
+										<div class="col-md-3">
+											<div class="form-group">
+												<label class="fs-display-block control-label" for="switchTestemunhaElcano">
+													É ou foi colaborador da Elcano?
+												</label>
+												<input class="checkbox" type="checkbox" id="switchTestemunhaElcano"
+													name="switchTestemunhaElcano" data-on-text="Sim" data-off-text="Não" data-on-color="success"
+													data-off-color="danger" autofocus="autofocus">
+												<input type="hidden" id="hideSwitchTestemunha" name="hideSwitchTestemunha" />
+											</div>
+										</div>
+										<div class="col-md-4" id="testemunhaColaborador" style="display: none ;">
+											<div class="form-group" >
+												<label class="control-label" for="zoomTestemunhaColaborador">
+													Nome
+												</label>
+												<input type="zoom" class="form-control" id="zoomTestemunhaColaborador"
+													name="zoomTestemunhaColaborador" data-zoom="{
+																			'displayKey': 'NOME',
+																			'datasetId': 'dsFuncionarioProjElcano',
+																			'filterValues': '',
+																			'fields': [
+																			   {
+																				   'field': 'NOME',
+																				   'label': 'Ex-Colaborador',	
+																				   'standard': 'true',					       
+																				   'search': 'true'
+																				},
+																				{
+																					'field': 'CPF',
+																					'label': 'CPF',	
+																					'standard': 'true',					       
+																					'search': 'true'
+																				 }
+																			 ]
+																	}" value="" />
+											</div>
+										</div>
+										<div class="col-md-4" id="textTestemunhaNome">
+											<div class="form-group">
+												<label id="lbltestemunhaNome" class="control-label" for="testemunhaNome">Nome</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="testemunhaNome" name="testemunhaNome" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-user"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+												<label id="lblchapaTestemunha" class="control-label" for="chapaTestemunha">Chapa</label>
+												<input type="text" class="form-control" id="chapaTestemunha" name="chapaTestemunha" readonly/>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label id="lblctps" class="control-label" for="cpfTestemunha">CPF</label>
+												<input type="text" class="form-control" id="cpfTestemunha" name="cpfTestemunha" />
+											</div>
+										</div>
+									</div>
+									<div class="row containner-testemunha">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label id="lblTelefoneTestemunha" class="control-label"
+													for="telefoneTestemunha">Telefone</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="telefoneTestemunha" name="telefoneTestemunha" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-phone icon-sm"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label id="lblenderecoTestemunha" class="control-label"
+													for="enderecoTestemunha">Endereço</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="enderecoTestemunha" name="enderecoTestemunha" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-map-marker icon-sm"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<hr>
+									</div>
+									<hr>
+									<div class="row containner-testemunha"  style="padding-top: 20px;">
+										<div class="col-md-3">
+											<div class="form-group">
+												<label class="fs-display-block control-label" for="switchTestemunhaElcano2">
+													É ou foi colaborador da Elcano?
+												</label>
+												<input class="checkbox" type="checkbox" id="switchTestemunhaElcano2"
+													name="switchTestemunhaElcano2" data-on-text="Sim" data-off-text="Não"
+													data-on-color="success" data-off-color="danger" autofocus="autofocus">
+												<input type="hidden" id="hideSwitchTestemunha2" name="hideSwitchTestemunha2" />
+											</div>
+										</div>
+										<div class="col-md-4" id="testemunhaColaborador2" style="display: none ;">
+											<div class="form-group">
+												<label class="control-label" for="zoomTestemunhaColaborador2">
+													Nome
+												</label>
+												<input type="zoom" class="form-control" id="zoomTestemunhaColaborador2"
+													name="zoomTestemunhaColaborador2" data-zoom="{
+																			'displayKey': 'NOME',
+																			'datasetId': 'dsFuncionarioProjElcano',
+																			'filterValues': '',
+																			'fields': [
+																			   {
+																				   'field': 'NOME',
+																				   'label': 'Ex-Colaborador',	
+																				   'standard': 'true',					       
+																				   'search': 'true'
+																				},
+																				{
+																					'field': 'CPF',
+																					'label': 'CPF',	
+																					'standard': 'true',					       
+																					'search': 'true'
+																				 }
+																			 ]
+																	}" value="" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group" id="textTestemunhaNome2">
+												<label id="lbltestemunhaNome2" class="control-label" for="testemunhaNome2">Nome</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="testemunhaNome2" name="testemunhaNome2" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-user"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+												<label id="lblchapaTestemunha2" class="control-label" for="chapaTestemunha2">Chapa</label>
+												<input type="text" class="form-control" id="chapaTestemunha2" name="chapaTestemunha2" readonly />
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label id="lblcpfTestemunha2" class="control-label" for="cpfTestemunha2">CPF</label>
+												<input type="text" class="form-control" id="cpfTestemunha2" name="cpfTestemunha2" />
+											</div>
+										</div>
+									</div>
+									<div class="row containner-testemunha">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label id="lblTelefoneTestemunha2" class="control-label"
+													for="telefoneTestemunha2">Telefone</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="telefoneTestemunha2"
+														name="telefoneTestemunha2" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-phone icon-sm"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label id="lblenderecoTestemunha2" class="control-label"
+													for="enderecoTestemunha2">Endereço</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="enderecoTestemunha2"
+														name="enderecoTestemunha2" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-map-marker icon-sm"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<hr>
+									</div>
+									<hr>
+									<div class="row containner-testemunha" style="padding-top: 20px;">
+										<div class="col-md-3">
+											<div class="form-group">
+												<label class="fs-display-block control-label" for="switchTestemunhaElcano1">
+													É ou foi colaborador da Elcano?
+												</label>
+												<input class="checkbox" type="checkbox" id="switchTestemunhaElcano1"
+													name="switchTestemunhaElcano1" data-on-text="Sim" data-off-text="Não"
+													data-on-color="success" data-off-color="danger" autofocus="autofocus">
+												<input type="hidden" id="hideSwitchTestemunha1" name="hideSwitchTestemunha1" />
+											</div>
+										</div>
+										<div class="col-md-4" id="testemunhaColaborador1" style="display: none ;">
+											<div class="form-group">
+												<label class="control-label" for="zoomTestemunhaColaborador1">
+													Nome
+												</label>
+												<input type="zoom" class="form-control" id="zoomTestemunhaColaborador1"
+													name="zoomTestemunhaColaborador1" data-zoom="{
+																			'displayKey': 'NOME',
+																			'datasetId': 'dsFuncionarioProjElcano',
+																			'filterValues': '',
+																			'fields': [
+																			   {
+																				   'field': 'NOME',
+																				   'label': 'Ex-Colaborador',	
+																				   'standard': 'true',					       
+																				   'search': 'true'
+																				},
+																				{
+																					'field': 'CPF',
+																					'label': 'CPF',	
+																					'standard': 'true',					       
+																					'search': 'true'
+																				 }
+																			 ]
+																	}" value="" />
+											</div>
+										</div>
+										<div class="col-md-4" id="textTestemunhaNome1">
+											<div class="form-group">
+												<label id="lbltestemunhaNome1" class="control-label" for="testemunhaNome1">Nome</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="testemunhaNome1" name="testemunhaNome1" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-user"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+												<label id="lblchapaTestemunha1" class="control-label" for="chapaTestemunha1">Chapa</label>
+												<input type="text" class="form-control" id="chapaTestemunha1" name="chapaTestemunha1" />
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label id="lblcpfTestemunha1" class="control-label" for="cpfTestemunha1">CPF</label>
+												<input type="text" class="form-control" id="cpfTestemunha1" name="cpfTestemunha1" />
+											</div>
+										</div>
+									</div>
+									<div class="row containner-testemunha">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label id="lblTelefoneTestemunha1" class="control-label"
+													for="telefoneTestemunha1">Telefone</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="telefoneTestemunha1"
+														name="telefoneTestemunha1" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-phone icon-sm"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label id="lblenderecoTestemunha1" class="control-label"
+													for="enderecoTestemunha1">Endereço</label>
+												<div class="input-group">
+													<input type="text" class="form-control" id="enderecoTestemunha1"
+														name="enderecoTestemunha1" />
+													<span class="input-group-addon">
+														<span class="fluigicon fluigicon-map-marker icon-sm"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+					
+					
+					<!-- [ Dados da Perícia ]  -->
+					<div class="panel panel-default mb-3" id="panel_dadosPericia">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseDadosPericia">
+									&nbsp;  Dados da Perícia
+								</a>
+							</h2>
+						</div>
+						<div id="collapseDadosPericia" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-2">
+										<label class="control-label required" for="haveraPericia">
+											Haverá Perícia ?
+										</label>
+										<div class="radio">
+											<label>
+												<input id="haveraPericia" name="haveraPericia" value="sim" type="radio">
+												<span class="">Sim</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input id="haveraPericia" name="haveraPericia" value="nao" type="radio">
+												<span class="">Não</span>
+											</label>
+										</div>
+										<input type="hidden" id="decHaveraPericia" name="decHaveraPericia" value="" />
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label id="lblperitoAssisnte" class="control-label required" for="peritoAssisnte">Nome do Perito
+												Assistente</label>
+											<input type="text" class="form-control" id="peritoAssisnte" name="peritoAssisnte" />
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label id="lbltipoPericia" class="control-label required" for="tipoPericia">Tipo de Perícia</label>
+											<input type="text" class="form-control" id="tipoPericia" name="tipoPericia" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- [ Arquivamento do Processo ]  -->
+					<div class="panel panel-default mb-3" id="panel_ArquivamentoProcesso">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseArquivamentoProcesso">
+									&nbsp; Arquivamento do Processo
+								</a>
+							</h2>
+						</div>
+						<div id="collapseArquivamentoProcesso" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="control-label required" for="processoArquivado">
+											Processo Arquivado?
+										</label>
+										<div class="radio">
+											<label>
+												<input name="processoArquivado" id="processoArquivado"  value="sim" type="radio">
+												<span class="">Sim</span>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input name="processoArquivado" id="processoArquivado"  value="nao" type="radio">
+												<span class="">Não</span>
+											</label>
+										</div>
+										<input type="hidden" id="decProcessoArquivado" name="decProcessoArquivado" value="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- [ Observações ]  -->
+					<div class="panel panel-default mb-3" id="panel_observacao">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseobservacao">
+									&nbsp; Observação
+								</a>
+							</h2>
+						</div>
+						<div id="collapseobservacao" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-12" ><br>
+											<label for="origem">Observações:</label>
+											<div class="input-group">
+												<textarea class="form-control" name="origem" id="origem"
+													style="height: 70px" value=""></textarea><span
+													class="input-group-addon fs-cursor-pointer" id="preencheAcompanhamento"
+													onclick="preencheAcompanhamento()" tabindex="0" onkeypress="preencheAcompanhamento()" onblur="preencheAcompanhamento()">
+													<span class="fluigicon fluigicon-user-comment fluigicon-lg"></span>
+												</span>
+											</div>
+										</div>
+										<div class="form-group row">&nbsp;</div>
+										<div class="col-md-12">
+											<textarea class="form-control" name="destino" id="destino"
+												style="height: 200px; vertical-align: top; width: 100%; display:none;"
+												onKeyPress="alteraMaiusculo(this);" onkeyup="alteraMaiusculo(this);"
+												value="" readonly></textarea>
+											<div name="acompanhamento" id="acompanhamento" readonly></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- [ERRO]  -->
+					<!-- <div class="panel panel-default mb-3 hide" id="panel_Erro">
+						<div class="panel-heading fs-no-padding fs-lg-padding-right">
+							<h2 class="panel-title">
+								<a class="collapse-icon up titulo-panel" style="text-decoration: none;" data-toggle="collapse"
+									href="#collapseErro">
+									<span class="fluigicon fluigicon-info-sign icon-sm" aria-hidden="true"></span>
+									&nbsp;Erro 
+								</a>
+							</h2>
+						</div>
+						<div id="collapseErro" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label id="lblatividade" class="control-label " 
+												for="atividade">Atividade</label>
+											<input type="text" class="form-control" id="errorAtividade" name="errorAtividade" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label id="lblerroMensagem" class="control-label " 
+												for="erroMensagem">Erro Mensagem</label>
+											<input type="text" class="form-control" id="errorMensagem" name="errorMensagem" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+
+				</div>
+			</div>
+		</div>	
+		</form>
+	</div>
+</body>
+
+</html>

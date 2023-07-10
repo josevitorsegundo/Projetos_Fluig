@@ -1,0 +1,422 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	
+	<script src="/webdesk/vcXMLRPC.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="custom.css"/>
+	<link rel="stylesheet" href="xp.validator.css"/>
+	
+	<script type="text/javascript" src="custom.js" charset="utf-8"></script>
+	<script type="text/javascript" src="atividades.js" charset="utf-8"></script>
+	<script type="text/javascript" src="xp.validator.js" charset="utf-8"></script>	
+	<script type="text/javascript" src="xp.validatorExt.js" charset="utf-8"></script>
+	<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+	
+</head>
+<body>
+<div class="fluig-style-guide">
+
+	<form name="form" role="form" style="padding-left: 5%; margin-right: 5%">
+			
+			<!-- [Inicio] campos de controle -->
+			<input type="hidden" id="numeroFluxo" name="numeroFluxo" value="" />
+			<input type="hidden" id="dataCriacao" name="dataCriacao" value="" />
+			<input type="hidden" id="dataFinalizacao" name="dataFinalizacao" value="" />
+			<input type="hidden" id="situacao" name="situacao" value="" />
+			<input type="hidden" id="campoDescritor" name="campoDescritor" value="" />
+			<!-- [Fim] campos de controle -->	
+			
+			<input type="hidden" id="matriculaAprovadorAtual" name="matriculaAprovadorAtual" value="" />
+			<input type="hidden" id="status" name="status" value="" />			
+
+			<input type="hidden" id="cod_empresa" name="cod_empresa" value="" />
+			<input type="hidden" id="nom_empresa" name="nom_empresa" value="" />
+			<input type="hidden" id="nom_solicitante" name="nom_solicitante" value="" />
+			<input type="hidden" id="email_solicitante" name="email_solicitante" value="" />
+			<input type="hidden" id="email_comprador" name="email_comprador" value="" />
+			
+			<input type="hidden" id="strJsonTabelaItens" name="strJsonTabelaItens" value="" />
+			<input type="hidden" id="strJsonTabelaAprovacao" name="strJsonTabelaAprovacao" value="" />
+			<input type="hidden" id="strJsonTabelaCotacao" name="strJsonTabelaCotacao" value="" />
+			<input type="hidden" id="strJsonTabelaSimulacao" name="strJsonTabelaSimulacao" value="" />
+			
+			<div class="page-header">
+				<div class="row">
+					<div class="col-md-9">
+						<h2><span class="fluigicon fluigicon-sticky-note fluigicon-md"></span>&nbsp;<label id="lblTitulo" style="color: #004186; font-weight: bold;">Aprovação de Pedido de Compras</label></h2>
+					</div>
+					
+					<div class="col-md-3" style="margin-top: 15px; padding: 0px; padding-right: 10px">
+						<div id="divStatus" class="btn btn-info" style="width: 100%; height: 35px">
+							<span id="spanIconStatus" class="fluigicon fluigicon-sm" style="color: #df8d2c"></span>&nbsp;&nbsp;<label id="lblStatus">AGUARDANDO APROVAÇÃO</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-default" >
+			    <div class="panel-body">
+			        <div class="row">
+					    <div class="col-md-8 col-md-offset-2" style="border-bottom-style: solid; border-width: 0.5">
+							<h3>
+								<span class="fluigicon fluigicon-sticky-note fluigicon-md"></span><font style="color: #004186">&nbsp;Dados do Pedido de Compra do Protheus</font>
+					    	</h3>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+						    <div class="col-md-4">
+					    		<h4>
+						    		<dl>
+									    <dt>PC Protheus</dt>
+									    <dd><strong>
+									    		<label id="lblNumero" style="color: #ea8b1d">[value]</label>
+									    	</strong>
+									    	<input type="hidden" id="num_pedido_compra" name="num_pedido_compra" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-8">
+					    		<h4>
+						    		<dl>
+									    <dt>Fornecedor</dt>
+									    <dd><strong>
+									    		<label id="lblFornecedor" style="color: #ea8b1d">[value]</label>
+									    	</strong>
+									    	<input type="hidden" id="cod_fornecedor" name="cod_fornecedor" value="" />
+									    	<input type="hidden" id="nom_fornecedor" name="nom_fornecedor" value="" />
+									    	<input type="hidden" id="cod_loja" name="cod_loja" value="" />
+									    	<input type="hidden" id="num_cgc" name="num_cgc" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+ 						    <div class="col-md-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Filial</dt>
+									    <dd>
+									    	<label id="lblFilial">[value]</label>
+									    	<input type="hidden" id="cod_filial" name="cod_filial" value="" />
+											<input type="hidden" id="nom_filial" name="nom_filial" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+ 						    <div class="col-md-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Data da Emissão</dt>
+									    <dd>
+									    	<label id="lblDataEmissaoProtheus">[value]</label>
+									    	<input type="hidden" id="dat_emissao" name="dat_emissao" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+ 						    <div class="col-md-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Contato</dt>
+									    <dd>
+									    	<label id="lblNomeContato">[value]</label>
+									    	<input type="hidden" id="nom_contato" name="nom_contato" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+					    	<div class="col-md-6">
+					    		<h4>
+						    		<dl>
+									    <dt>Centro de Custo</dt>
+									    <dd>
+									    	<label id="lblCentroCusto">[value]</label>	
+									    	<input type="hidden" id="cod_centro_custo" name="cod_centro_custo" value="" />
+											<input type="hidden" id="dsc_centro_custo" name="dsc_centro_custo" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-6">
+					    		<h4>
+						    		<dl>
+									    <dt>Condição de Pagamento</dt>
+									    <dd>
+									    	<label id="lblCondicaoPagamento">[value]</label>
+									    	<input type="hidden" id="cod_condicao_pagamento" name="cod_condicao_pagamento" value="" />
+									    	<input type="hidden" id="dsc_condicao_pagamento" name="dsc_condicao_pagamento" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+					    	<div class="col-md-6">
+					    		<h4>
+						    		<dl>
+									    <dt>Comprador</dt>
+									    <dd>
+									    	<label id="lblComprador">[value]</label>	
+									    	<input type="hidden" id="cod_comprador" name="cod_comprador" value="" />
+											<input type="hidden" id="dsc_comprador" name="dsc_comprador" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-6">
+					    		<h4>
+						    		<dl>
+									    <dt>Data Prevista de Primeiro Pagamento</dt>
+									    <dd>
+									    	<label id="lblDataPrimeiroPagamento">[value]</label>
+									    	<input type="hidden" id="dat_primeiro_pagamento" name="dat_primeiro_pagamento" value="" />									    	
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    </div>
+					    
+					     <div class="col-md-8 col-md-offset-2">
+					    	<div class="col-md-12">
+					    		<h4>
+						    		<dl>
+									    <dt>Observação</dt>
+									    <dd>
+									    	<label id="lblObservacao">[value]</label>									    	
+											<input type="hidden" id="dsc_observacao" name="dsc_observacao" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>					    	
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+					     	<div class="col-md-12">
+						     	<h4>
+									<span class="fluigicon fluigicon-document-square fluigicon-sm"></span><font style="color: #004186">&nbsp;Itens da Solicitação</font>
+						    	</h4>
+						    	<div class="table-responsive">
+							     	<table id="tabelaItens" class="table table-hover">
+										<thead>
+											<tr>
+												<th>Código</th>
+												<th>Descrição</th>
+												<th>UM</th>
+												<th>Qtd.</th>
+												<th>Preço Unit.</th>
+												<th>Valor Total</th>
+												<th>Data Entrega</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+							    </div>
+						     </div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+					    	<div class="col-md-4 col-sm-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Descontos</dt>
+									    <dd>
+									    	<label id="lblDescontos">[value]</label>	
+									    	<input type="hidden" id="val_descontos" name="val_descontos" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-4 col-sm-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Impostos</dt>
+									    <dd>
+									    	<label id="lblImpostos">[value]</label>
+									    	<input type="hidden" id="val_impostos" name="val_impostos" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-4 col-sm-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Frete</dt>
+									    <dd>
+									    	<label id="lblFrete">[value]</label>
+									    	<input type="hidden" id="val_frete" name="val_frete" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2">
+					    	<div class="col-md-4 col-sm-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Qtd. Itens</dt>
+									    <dd>
+									    	<label id="lblQtdItens">[value]</label>	
+									    	<input type="hidden" id="qtd_itens" name="qtd_itens" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-4 col-sm-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Valor das Mercadorias</dt>
+									    <dd>
+									    	<label id="lblValMercadorias">[value]</label>
+									    	<input type="hidden" id="val_mercadorias" name="val_mercadorias" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    	<div class="col-md-4 col-sm-4">
+					    		<h4>
+						    		<dl>
+									    <dt>Valor Total do Pedido</dt>
+									    <dd>
+									    	<label id="lblValTotalPedido">[value]</label>
+									    	<input type="hidden" id="val_total_pedido" name="val_total_pedido" value="" />
+									    </dd>
+									</dl>
+								</h4>
+					    	</div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2" id="div_cotacao">
+					    	<div class="panel-group" id="accordion">
+					    		<div class="panel panel-default">
+					    			<div class="panel-heading">
+							            <h4 class="panel-title">
+							                <a class="collapse-icon" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+							                Mapa de Cotação
+							                </a>							                
+							            </h4>
+							        </div>
+							        <div id="collapseOne" class="panel-collapse collapse">
+							            <div class="panel-body">
+											<div id="div_mapa_cotacao" style="padding-left: 5px; padding-right: 5px"></div>
+							            </div>
+							        </div>
+					    		</div>
+					    	</div>
+					    </div>
+					    
+					    <div class="col-md-8 col-md-offset-2" id="div_simulacao">
+					    	<div class="panel-group" id="accordion">
+					    		<div class="panel panel-default">
+					    			<div class="panel-heading">
+							            <h4 class="panel-title">
+							                <a class="collapse-icon" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+							                Mapa de Simulacao
+							                </a>
+							            </h4>
+							        </div>
+							        <div id="collapseTwo" class="panel-collapse collapse">
+							            <div class="panel-body">
+											<div id="div_mapa_simulacao" style="padding-left: 5px; padding-right: 5px"></div>
+							            </div>
+							        </div>
+					    		</div>
+					    	</div>
+					    </div>
+					    
+					    <div id="divPainelAprovacao">
+					    	<div class="col-md-8 col-md-offset-2" style="border-bottom-style: solid; border-width: 0.5">
+								<h3>
+									<span class="fluigicon fluigicon-enrollment-verified fluigicon-md"></span><font style="color: #004186">&nbsp;Aprovação</font>
+						    	</h3>
+						    </div>
+						    <div class="col-md-8 col-md-offset-2">
+							    <div class="col-md-5">
+								    <br>
+							    	<div class="row">
+					          		 	<div class="col-lg-12 col-md-12 col-sm-12">
+								        	<div class="form-group">
+										    	<label class="control-label required" atividades="5" for="cmbAprovacao">Ação</label> 
+									   			<select class="form-control" name="cmbAprovacao" id="cmbAprovacao">
+									       			<option value="">---- Selecione ----</option>
+									      		 	<option value="A">Aprovar</option>
+							              		 	<option value="R">Reprovar</option>
+							          		 	</select>
+								        	</div>
+					          		 	</div>
+							    	</div>
+							    	<div class="row" id="div_motivo">
+					          		 	<div class="col-lg-12 col-md-12 col-sm-12">
+								        	<div class="form-group">
+									        	<label class="control-label" for="zoomMotivoReprovacao">Motivo</label>
+												<input type="hidden" id="motivoReprovacao" name="motivoReprovacao"/>
+												<input type="zoom" class="form-control" id="zoomMotivoReprovacao" name="zoomMotivoReprovacao"
+											       data-zoom="{
+														    'displayKey': 'DESCRICAO',
+														    'datasetId': 'dsMotivosReprovacao',
+														    'fields': [
+														       {
+															       'field': 'DESCRICAO',
+															       'label': 'Motivo',	
+															       'standard': 'true',					       
+															       'search': 'true'
+														        }
+														     ]
+											       }" value="" />
+											</div>
+							    		</div>
+						        	</div>
+							    </div>
+
+							    <div class="col-md-7 form-group">
+								    <br>
+									<label class="control-label" for="txt_comentario_aprovacao">Comentários</label>	
+									<textarea rows="5" cols="5" class="form-control" name="txt_comentario_aprovacao" id="txt_comentario_aprovacao"></textarea>
+								</div>
+						    </div>
+					    </div> 
+						
+						<!-- Resumo das Aprovações -->						
+						<div class="col-md-8 col-md-offset-2" style="border-bottom-style: solid; border-width: 0.5">
+							<h3>
+								<span class="fluigicon fluigicon-process-decision fluigicon-md"></span><font style="color: #004186">&nbsp;Resumo das Aprovações</font>
+					    	</h3>
+					    </div>
+					    <div class="col-md-8 col-md-offset-2">
+						    <div class="panel-body fs-sm-space media clearfix" >
+						        <a class="pull-left" href="#">
+						            <div>
+						                <i class="fluigicon fluigicon-process-decision icon-thumbnail-xs"></i>
+						            </div>
+						        </a>
+						        <div class="media-body" id="divResumoAprovacao">
+						        </div>
+						    </div>
+					    </div>
+					    					     
+					</div>
+					
+			    </div>
+		    </div>
+		    
+		</div>
+			
+	</form>
+
+</div>
+</body>
+</html>

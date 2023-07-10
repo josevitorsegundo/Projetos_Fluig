@@ -1,0 +1,161 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+</head>
+<body>
+<div class="fluig-style-guide">
+<form name="form" role="form">
+	<input type="hidden" name="unavailableProducts" id="unavailableProducts">
+	<!-- <input type="hidden" name="numMovCompra" id="numMovCompra"> -->
+	<input type="hidden" name="currentTask" id="currentTask">
+	<input type="hidden" name="itensCotados" id="itensCotados">
+	<input type="hidden" name="itensNaoCotados" id="itensNaoCotados">
+	<!-- <input type="hidden" name="codCotacao" id="codCotacao"> -->
+	<input type="hidden" name="identificador" id="identificador">
+	<input type="hidden" name="chapa" id="chapa">
+	<div class='panel panel-primary' id='codigos'>
+		<div class='panel-heading'>Identificadores</div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='numMovCompra'>Id da SC</label>
+						<input class='form-control' type='text' readonly name='numMovCompra' id='numMovCompra'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='codCotacao'>COD. Cotação</label>
+						<input class='form-control' type='text' readonly name='codCotacao' id='codCotacao'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='idPedido'>Id Pedido</label>
+						<input class='form-control' type='hidden' name='idPedido' id='idPedido'>
+						<input class='form-control' type='text' readonly name='numPedido' id='numPedido'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='numMovCompraNovo'>Nº SC</label>
+						<input class='form-control' type='text' readonly name='numMovCompraNovo' id='numMovCompraNovo'>
+					</div>
+				</div>
+				<div class='col-xs-2 col-md-2 col-sm-2 col-lg-2'>
+					<div class='form-group'>
+						<label class='control-label' for='stacusCot'>Status</label>
+						<input class='form-control' type='text' readonly name='stacusCot' id='stacusCot'>
+					</div>
+				</div>
+				<div class='col-xs-12 col-md-2 col-sm-2 col-lg-2'>
+					<div class="form-group">
+						<label class="control-label" for="comprador">Comprador</label>
+						<input class="form-control" readonly type="text" name="comprador" id="comprador" >
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='cotacao'>
+		<div class='panel-heading'><h3 style='text-align:center;font-weight:bold'>
+			Cotacao
+		</h3></div>
+		<div class='panel-body'>
+			<h1 style="text-align: center;">Produtos</h1>
+			<table class="table table-striped" tablename="TBPRODUTOSCOT" id="TBPRODUTOSCOT" noaddbutton="true" nodeletebutton="true"  >
+				<thead>
+					<tr>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div class='row'>
+								<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>
+									<div class="form-group">
+										<label class="control-label" for="produto">Produto</label>
+										<input class="form-control" readonly type="text" name="produto" id="produto">
+									</div>
+								</div>
+								<div class='col-xs-12 col-md-2 col-sm-2 col-lg-2'>
+									<div class="form-group">
+										<label class="control-label" for="idprd">Id Produto</label>
+										<input class="form-control" readonly type="text" name="idprd" id="idprd">
+									</div>
+								</div>
+								<div class="col-xs-12 col-md-2 col-sm-2 col-lg-2">
+									<div class="form-group">
+										<label class="control-label" for="numMov">Nº Movimento</label>
+										<input class="form-control" type="text" name="numMov" readonly id="numMov">
+									</div>
+								</div>
+								<div class='col-xs-12 col-md-2 col-sm-2 col-lg-2'>
+									<div class="form-group">
+										<label class="control-label" for="codPrd">Valor do Item</label>
+										<input class="form-control" readonly type="text" name="status" id="status" value="Não Cotado">
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class='row'>
+				<div class='col-xs-12 col-md-8 col-sm-8 col-lg-8'>
+						<label class='control-label' for='total'>Frete + Impostos</label>
+				</div>
+				<div class='col-xs-12 col-md-4 col-sm-4 col-lg-4'>
+					<input class='form-control' readonly type='text' name='frete' id='frete'>
+
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-xs-12 col-md-8 col-sm-8 col-lg-8'>
+						<label class='control-label' for='total'>Valor Total</label>
+				</div>
+				<div class='col-xs-12 col-md-4 col-sm-4 col-lg-4'>
+					<input class='form-control' readonly type='text' name='total' id='total'>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='decisaoGerencia'>
+		<div class='panel-heading'><h3 style='text-align:center;font-weight:bold'>
+		Observações da Gerência
+		</h3></div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='form-group'>
+					<label class='control-label' for='obsGerencia'>Observações</label>
+					<textarea class='form-control' type='text' name='obsGerencia' id='obsGerencia' rows=''></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='panel panel-primary' id='decisaoDiretoria'>
+		<div class='panel-heading'><h3 style='text-align:center;font-weight:bold'>
+		Observações da Diretoria
+		</h3></div>
+		<div class='panel-body'>
+			<div class='row'>
+				<div class='form-group'>
+					<label class='control-label' for='obsDiretoria'>Observações</label>
+					<textarea class='form-control' type='text' name='obsDiretoria' id='obsDiretoria' rows=''></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+<script src="libs.js"></script>
+<script src="custom.js"></script>
+</body>
+</html>

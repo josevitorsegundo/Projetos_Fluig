@@ -1,0 +1,82 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+</head>
+<body>
+<div class="fluig-style-guide">
+<form name="form" role="form">
+	<div class='row'>
+		<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>			
+			<div class="form-group">
+				<label class="control-label" for="funcionario">Funcionario</label>
+					<input class="form-control" type="zoom" id="funcionario" name="funcionario" data-zoom="{
+						'displayKey':'DESCRICAO',
+						'datasetId':'ds_TabelaFuncionarios',
+						'fields':[
+									{
+									'field':'DESCRICAO',
+									'label':'DESCRICAO'
+									}
+								]
+						}" />
+			</div>
+		</div>
+		<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>			
+			<div class='form-group'>
+				<label class='control-label' for='aprovador'>Aprovador</label>
+				<select class='form-control' type='zoom' id='aprovador' name='aprovador'>
+					<option value=''> - </option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-xs-12 col-md-4 col-sm-4 col-lg-4'>
+			<div class='form-group'>
+				<label class='control-label' for='login'>Login</label>
+				<input class='form-control' type='text' name='login' id='login'>
+			</div>				
+		</div>
+		<div class='col-xs-12 col-md-4 col-sm-4 col-lg-4'>
+			<div class='form-group'>
+				<label class='control-label' for='senha'>Senha</label>
+				<input class='form-control' type='text' name='senha' id='senha'>
+			</div>				
+		</div>
+		<div class='col-xs-12 col-md-4 col-sm-4 col-lg-4'>
+			<div class='form-group'>
+				<label class='control-label' for='matricula'>Matricula</label>
+				<input class='form-control' type='text' name='matricula' readonly id='matricula'>
+			</div>				
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-xs-12 col-md-6 col-sm-6 col-lg-6'>
+			<div class='form-group'>
+				<label class='control-label' for='email'>Email</label>
+				<input class='form-control' type='text' name='email' id='email'>
+			</div>
+		</div>
+		<div class='col-xs-12 col-md-3 col-sm-3 col-lg-3'>
+			<div class='form-group'>
+				<label class='control-label' for='nome'>Nome</label>
+				<input class='form-control' type='text' name='nome' id='nome'>
+			</div>				
+		</div>
+		<div class='col-xs-12 col-md-3 col-sm-3 col-lg-3'>
+			<div class='form-group'>
+				<label class='control-label' for='sobrenome'>Sobrenome</label>
+				<input class='form-control' type='text' name='sobrenome' id='sobrenome'>
+			</div>				
+		</div>
+	</div>
+</form>
+</div>
+<script src="custom.js"></script>
+</body>
+</html>
